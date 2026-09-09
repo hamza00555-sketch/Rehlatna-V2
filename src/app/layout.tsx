@@ -7,6 +7,7 @@ import '@fontsource/inter/600.css';
 import '@/design/tokens.css';
 import './globals.css';
 import '@/design/experience.css';
+import '@/design/baby-hero.css';
 export const metadata: Metadata = {
   title: { default: 'رحلتنا — كل يوم أقرب', template: '%s · رحلتنا' },
   description: 'مساحة مشتركة لمتابعة الحمل، تجهيز الطفل، والاعتناء بتفاصيل العائلة.',

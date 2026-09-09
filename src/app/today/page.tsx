@@ -1,6 +1,8 @@
 export const dynamic = 'force-dynamic';
 import Link from 'next/link';
-import { Shell, PageTitle, Empty, Icon, PregnancyHero, SectionHeading } from '@/components/ui';
+import { BabyHero } from '@/components/baby-hero';
+import { DangerSigns } from '@/components/sheet';
+import { Shell, Empty, Icon, SectionHeading } from '@/components/ui';
 import { context } from '@/lib/supabase';
 import { gestation } from '@/lib/validation';
 export default async function Today() {
@@ -29,21 +31,17 @@ export default async function Today() {
   const ready = items.data?.filter((x) => x.status === 'ready').length ?? 0;
   return (
     <Shell active="today">
-      <PageTitle
-        eyebrow="كل يوم أقرب"
-        title={'أهلًا، ' + ctx.membership.display_name}
-        description="مساحة هادئة لرحلتكم، خطوة بخطوة."
-      />
       {stage ? (
-        <PregnancyHero
+        <BabyHero
           weeks={stage.weeks}
           days={stage.days}
           babyName={p.baby_name}
-          dueDate={p.due_date}
+          memberName={ctx.membership.display_name}
+          dateIso={new Date().toISOString()}
         />
       ) : (
         <Empty title="نبدأ بمعرفة موعد اللقاء">
-          أضف موعد الولادة المتوقع لتخصيص الرحلة.{' '}
+          أضف موعد الولادة المتوقع لتخصيص الرحلة.
           <Link href="/pregnancy" className="text-link">
             إضافة موعد الولادة
           </Link>
@@ -61,7 +59,7 @@ export default async function Today() {
             </div>
             <h2>{next.title}</h2>
             <p>
-              {new Intl.DateTimeFormat('ar-SA', {
+              {new Intl.DateTimeFormat('ar-SA-u-nu-latn', {
                 dateStyle: 'medium',
                 timeStyle: 'short',
                 timeZone: 'Asia/Riyadh',
@@ -89,15 +87,16 @@ export default async function Today() {
               {ready} من {items.data?.length ?? 0} جاهز
             </p>
           </Link>
-          <Link href="/private" className="card private-card feature-card">
+          <Link href="/today/week" className="card private-card feature-card">
             <span className="icon-tile">
               <Icon name="lock" />
             </span>
-            <h3>مساحتي الخاصة</h3>
-            <p>المال والملاحظات الشخصية</p>
+            <h3>ماذا يحدث هذا الأسبوع؟</h3>
+            <p>تطور الأسبوع ومرحلتكم الحالية</p>
           </Link>
         </div>
       </div>
+      <DangerSigns />
       <Link href="/pregnancy" className="text-link">
         تعديل تفاصيل الحمل
       </Link>

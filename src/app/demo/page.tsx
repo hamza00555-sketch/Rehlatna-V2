@@ -1,26 +1,30 @@
 import Link from 'next/link';
+import { BabyHero } from '@/components/baby-hero';
+import { DangerSigns } from '@/components/sheet';
 import {
   Shell,
   PageTitle,
   Icon,
-  PregnancyHero,
   SectionHeading,
   PreparationSummary,
   NurseryImage,
 } from '@/components/ui';
 export default async function Demo({ searchParams }: { searchParams: Promise<{ tab?: string }> }) {
   const { tab } = await searchParams;
-  const active = ['today', 'journey', 'preparation', 'family'].includes(tab ?? '') ? tab! : 'today';
+  const active = ['today', 'journey', 'preparation', 'family', 'more'].includes(tab ?? '')
+    ? tab!
+    : 'today';
   return (
     <Shell active={active} demo>
       {active === 'today' ? (
         <>
-          <PageTitle
-            eyebrow="أيام صغيرة، وفرحة تكبر"
-            title="صباح الخير، يا أهل الحكاية"
-            description="هذه مساحتكم. نرتّب التفاصيل ونترك مكانًا للفرحة."
+          <BabyHero
+            weeks={24}
+            days={2}
+            memberName="العائلة"
+            demo
+            dateIso={new Date().toISOString()}
           />
-          <PregnancyHero weeks={22} demo />
           <SectionHeading title="تفاصيل يومكم" subtitle="على مهلكم، خطوة بخطوة" />
           <div className="today-grid">
             <Link href="/demo?tab=journey" className="card medical appointment-card card-link">
@@ -48,7 +52,7 @@ export default async function Demo({ searchParams }: { searchParams: Promise<{ t
                   قائمة الصغير <Icon name="arrow" />
                 </span>
               </Link>
-              <Link href="/demo?tab=family" className="card private-card feature-card">
+              <Link href="/demo?tab=more" className="card private-card feature-card">
                 <span className="icon-tile">
                   <Icon name="lock" />
                 </span>
@@ -60,6 +64,7 @@ export default async function Demo({ searchParams }: { searchParams: Promise<{ t
               </Link>
             </div>
           </div>
+          <DangerSigns />
           <div className="quiet-note">
             <Icon name="leaf" />
             <p>مو لازم نجهّز كل شيء اليوم. خطوة صغيرة تكفي.</p>

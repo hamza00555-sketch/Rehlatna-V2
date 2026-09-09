@@ -37,3 +37,13 @@ Production build and strict TypeScript pass locally after these changes. The exi
 2. Configure custom SMTP with a verified sender owned by the product, apply branded email templates and test an external account. Do not redirect users' authentication mail to the owner.
 3. Complete hosted callback and two-account/two-family acceptance checks, private sharing/revocation and sign out.
 4. Verify persistent Vercel environment settings and Git deployment integration, and complete the remaining production gates in `setup.md`.
+
+## Screen-spec alignment follow-up
+
+The complete screen specification is now tracked by `screen-spec-audit.md`, which compares every section with shipped code, records contradictions and orders the remaining work. This is still a partial implementation of that specification, not a complete application.
+
+The today hero now uses `BabyHero`, replacing the nursery-based pregnancy card. An exact-week manifest exposes a newly generated, explicitly unreviewed week-24 poster in demo only. No weekly video has been generated or attached. Real accounts never receive that unreviewed poster. Weeks 0–4 have no fetus image or measurements, and missing weeks never borrow adjacent media. Week pages were added at `/today/week` and `/demo/week`; navigation now labels its fourth destination “المزيد” with a `/more` entry. A sourced warning-signs sheet was added.
+
+Local production build, TypeScript, formatting and 15 tests pass (the two new tests cover trimester/day calculations and strict media matching). The first weekly-hero deployment is `dpl_3hLGThBg7WNUQLvuU4g7EcW7friS`, READY. Desktop browser rendering of the new hero was visually checked. Browser pointer actions continue to time out at the browser transport even when the button is found and enabled; interactive expansion/focus/escape and real-video playback require subsequent acceptance verification. No claim is made that a loop was tested without a video file. Mobile visual acceptance remains pending.
+
+Final source cleanup removes the unused nursery pregnancy component. Deployment `dpl_ogvQmUZaoAyamLSPHxQXtJZqiaAk` contains that cleanup. The browser confirmed `/demo/week?week=4` has no image elements and displays no fetal measurements; future videos remain absent. The comparison report is the current completion reference.

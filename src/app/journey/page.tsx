@@ -27,7 +27,7 @@ export default async function Journey() {
               <article className="card medical" key={x.id}>
                 <h2>{x.title}</h2>
                 <time dateTime={x.starts_at}>
-                  {new Intl.DateTimeFormat('ar-SA', {
+                  {new Intl.DateTimeFormat('ar-SA-u-nu-latn', {
                     dateStyle: 'full',
                     timeStyle: 'short',
                     timeZone: 'Asia/Riyadh',

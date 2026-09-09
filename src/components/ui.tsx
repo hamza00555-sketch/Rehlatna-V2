@@ -91,31 +91,29 @@ export function Shell({
 }) {
   return (
     <>
-      <div className="app-frame">
+      <div className={'app-frame' + (active === 'today' ? ' hero-layout' : '')}>
         <header className="top app-top">
           <Brand />
           <span className="brand-caption">كل يوم أقرب إلى اللقاء</span>
-          <Link className="text-link" href={demo ? '/auth' : '/family'}>
+          <Link className="text-link" href={demo ? '/auth' : '/more'}>
             {demo ? 'ابدأ رحلتك' : 'عائلتنا'}
           </Link>
         </header>
-        {demo && (
-          <aside className="demo-banner">معاينة ببيانات افتراضية — لا تُحفظ تغييرات هنا</aside>
-        )}
+        {demo && <aside className="demo-banner">بيانات تجريبية</aside>}
         <main className={'app-main page-' + active}>{children}</main>
         <nav className="bottom-nav" aria-label="التنقل الرئيسي">
           {[
             ['today', 'اليوم'],
             ['journey', 'الرحلة'],
             ['preparation', 'التجهيز'],
-            ['family', 'العائلة'],
+            ['more', 'المزيد'],
           ].map(([id, label]) => (
             <Link
               key={id}
-              aria-current={active === id ? 'page' : undefined}
+              aria-current={(active === 'family' ? 'more' : active) === id ? 'page' : undefined}
               href={demo ? '/demo?tab=' + id : '/' + id}
             >
-              <Icon name={id} />
+              <Icon name={id === 'more' ? 'family' : id} />
               <span>{label}</span>
             </Link>
           ))}
@@ -172,71 +170,6 @@ export function NurseryImage({ priority = false }: { priority?: boolean }) {
       priority={priority}
       className="nursery-image"
     />
-  );
-}
-
-export function PregnancyHero({
-  weeks,
-  days = 0,
-  babyName,
-  dueDate,
-  demo = false,
-}: {
-  weeks: number;
-  days?: number;
-  babyName?: string | null;
-  dueDate?: string;
-  demo?: boolean;
-}) {
-  const percent = Math.max(0, Math.min(100, (weeks / 40) * 100));
-  return (
-    <section className="pregnancy-hero">
-      <div className="pregnancy-copy">
-        <span className="badge pregnancy-badge">
-          <Icon name="heart" />
-          {demo ? 'رحلة توضيحية' : 'رحلة ' + (babyName || 'صغيركم')}
-        </span>
-        <h2>
-          حبّ يكبر،
-          <br />
-          ولقاء يقترب.
-        </h2>
-        <div className="week-stat">
-          <span className="week-number numeric">{weeks}</span>
-          <div>
-            <strong>أسبوعًا مكتملًا</strong>
-            <p>{days > 0 ? `و${days} أيام` : 'من رحلة الحمل'}</p>
-          </div>
-        </div>
-        <div className="hero-progress">
-          <div
-            className="progress"
-            role="progressbar"
-            aria-label="المدة التقريبية للحمل"
-            aria-valuemin={0}
-            aria-valuemax={40}
-            aria-valuenow={Math.max(0, Math.min(40, weeks))}
-          >
-            <span style={{ width: percent + '%' }} />
-          </div>
-          <small>
-            {demo ? (
-              'كل خطوة صغيرة تستحق أن نحتفي بها.'
-            ) : (
-              <>
-                الموعد المتوقع: <bdi>{dueDate}</bdi>
-                <br />
-                حساب تقريبي من موعد الولادة، وقد يعدّله الطبيب.
-              </>
-            )}
-          </small>
-        </div>
-      </div>
-      <div className="pregnancy-scene">
-        <NurseryImage priority />
-        <span className="scene-caption">نُهيّئ مكانًا لصغيركم</span>
-      </div>
-    </section>
   );
 }
 
