@@ -1,16 +1,9 @@
 import Link from 'next/link';
-import { EditorialArt, type EditorialKind } from '@/components/editorial-art';
+import { EditorialArt } from '@/components/editorial-art';
 import { BabyHero } from '@/components/baby-hero';
 import { ReadinessRing } from '@/components/readiness-ring';
 import { DangerSigns } from '@/components/sheet';
-import {
-  Shell,
-  PageTitle,
-  Icon,
-  SectionHeading,
-  PreparationSummary,
-  NurseryImage,
-} from '@/components/ui';
+import { Shell, PageTitle, Icon, SectionHeading, PreparationSummary } from '@/components/ui';
 export default async function Demo({ searchParams }: { searchParams: Promise<{ tab?: string }> }) {
   const { tab } = await searchParams;
   const active = ['today', 'journey', 'preparation', 'family', 'more'].includes(tab ?? '')
@@ -32,13 +25,13 @@ export default async function Demo({ searchParams }: { searchParams: Promise<{ t
               <Icon name="calendar" />
             </span>
             <span>
-              <small>الخطوة التالية</small>
-              <h2>نرتّب أسئلتنا قبل الموعد</h2>
-              <p>مساحة لكل ما تودّون مناقشته مع الطبيب</p>
+              <small>خطوة واحدة لليوم</small>
+              <h2>ماذا نودّ أن نسأل الطبيب؟</h2>
+              <p>نحفظ أسئلتنا الآن، ونذهب للموعد مطمئنين.</p>
             </span>
             <Icon name="arrow" />
           </Link>
-          <SectionHeading title="تفاصيل تطمئنكم" subtitle="على مهلكم، خطوة بخطوة" />
+          <SectionHeading title="يومكم، على مهل" subtitle="كل ما يهمكم في مكانه" />
           <div className="today-bento demo-scene-bento">
             <Link href="/demo?tab=journey" className="card medical today-appointment">
               <span className="icon-tile">
@@ -52,14 +45,19 @@ export default async function Demo({ searchParams }: { searchParams: Promise<{ t
               </span>
             </Link>
             <Link href="/demo?tab=journey" className="card journey-tile">
+              <span className="icon-tile">
+                <Icon name="journey" />
+              </span>
+              <small>أين نحن في الرحلة</small>
+              <h2>منتصف الحكاية</h2>
+              <p>نعيش الثلث الثاني</p>
               <span className="scene-path" aria-hidden="true">
                 <i />
                 <i />
                 <i />
+                <i />
+                <i />
               </span>
-              <small>أين نحن في الرحلة</small>
-              <h2>تكبر الحكاية</h2>
-              <p>الثلث الثاني من الحمل</p>
               <span className="card-action">
                 محطاتكم القادمة <Icon name="arrow" />
               </span>
@@ -69,7 +67,11 @@ export default async function Demo({ searchParams }: { searchParams: Promise<{ t
                 <Icon name="leaf" />
               </span>
               <small>تطور الصغير</small>
-              <h2>كل أسبوع، حكاية جديدة</h2>
+              <h2>
+                صغيركم يكبر.
+                <br />
+                واللقاء يقترب.
+              </h2>
               <p>تعرّفوا على تطور صغيركم في الأسبوع 24، وما يهم في هذه المرحلة.</p>
               <span className="card-action">
                 اكتشفوا هذا الأسبوع <Icon name="arrow" />
@@ -77,7 +79,11 @@ export default async function Demo({ searchParams }: { searchParams: Promise<{ t
             </Link>
             <Link href="/demo?tab=preparation" className="card ready today-readiness">
               <ReadinessRing ready={1} total={4} />
-              <h2>نهيّئ له مكانًا</h2>
+              <h2>
+                نهيّئ مكانًا
+                <br />
+                للحياة الجديدة
+              </h2>
               <p>1 من 4 متوفر · نحتاجه: 1</p>
               <span className="card-action">
                 التجهيز على مهل <Icon name="arrow" />
@@ -156,11 +162,13 @@ export default async function Demo({ searchParams }: { searchParams: Promise<{ t
                 className={'card preparation-card with-photo ' + (i === 0 ? 'ready' : '')}
                 key={title}
               >
-                <EditorialArt
-                  kind={(['nursery', 'journey', 'essentials', 'bag'] as EditorialKind[])[i]}
-                  compact
-                  caption="صورة توضيحية للفئة"
-                />
+                {i !== 1 && (
+                  <EditorialArt
+                    kind={i === 0 ? 'nursery' : i === 2 ? 'essentials' : 'bag'}
+                    compact
+                    caption="صورة توضيحية للفئة"
+                  />
+                )}
                 <div className="row">
                   <span className="icon-tile">
                     <Icon name={icon} />

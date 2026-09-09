@@ -1,330 +1,748 @@
-/* Today is one luminous scene. Artwork is confined to its matching reviewed status;
-   ambient light and abstract orbits remain available when no weekly media exists. */
-.today-experience {
-  --scene-ground: #fcf2ea;
-  --scene-glass: #fffaf5d9;
-  --scene-ink: #493632;
-  --scene-muted: #79605c;
-  --scene-line: #ffffffb3;
-  --scene-shadow: 0 16px 44px #916c7b13;
-  background:
-    radial-gradient(ellipse at 0% 15%, #f2cac585, transparent 45%),
-    radial-gradient(ellipse at 95% 53%, #e3d9ec99, transparent 43%),
-    radial-gradient(ellipse at 10% 83%, #eed4ad70, transparent 36%), var(--scene-ground);
+/* Editorial direction: opaque reading surfaces, generous Arabic type, a dedicated
+   stage for the baby, and one deep accent for the next action. No text on imagery. */
+.app-frame {
+  --day-canvas: #f7f3ec;
+  --day-surface: #fffcf7;
+  --day-ink: #2c2427;
+  --day-muted: #65535a;
+  --day-line: #d8ccc3;
+  --day-accent: #673447;
+  --day-on-accent: #fff7ec;
+  --day-hero: #362329;
+  --day-on-hero: #fff7ec;
+  --day-hero-secondary: #eed9c7;
+  --day-medical: #263f44;
+  --day-on-medical: #f8f4ea;
+  --day-journey: #ebd2bf;
+  --day-readiness: #e7e8d5;
+  --day-ring: #3f624e;
+  --day-ring-track: #b8c0ab;
+  --day-ring-center: #f5f3e5;
+  --day-warning: #f2e0c5;
+  --day-warning-ink: #62421f;
+  --day-shadow: 0 10px 30px #3623290c;
+  --color-canvas: var(--day-canvas);
+  --color-surface: var(--day-surface);
+  --color-surface-raised: var(--day-surface);
+  --color-primary: var(--day-ink);
+  --color-ink: var(--day-ink);
+  --color-muted: var(--day-muted);
+  --color-faint: var(--day-muted);
+  --color-divider: var(--day-line);
+  background: var(--day-canvas);
+  color: var(--day-ink);
 }
-body:has(.today-experience) {
-  background: var(--color-canvas);
+.app-frame .app-main {
+  background: transparent;
+}
+.app-frame .page-title p,
+.app-frame .section-heading p {
+  font-size: 15px;
+  color: var(--day-muted);
+}
+.app-frame .page-title h1 {
+  font-weight: 600;
+}
+.app-frame .button {
+  background: var(--day-accent);
+  border-color: var(--day-accent);
+  color: var(--day-on-accent);
+}
+.app-frame .button.secondary {
+  background: var(--day-surface);
+  color: var(--day-ink);
+  border-color: var(--day-line);
+}
+.app-frame .button.danger {
+  background: var(--day-surface);
+  color: var(--color-danger);
+  border-color: currentColor;
+}
+.app-frame .button:disabled {
+  background: var(--color-surface-tint);
+  color: var(--day-muted);
+  border-color: var(--day-line);
+}
+.app-frame .button:hover:not(:disabled) {
+  background: var(--day-hero);
+  border-color: var(--day-hero);
+  color: var(--day-on-hero);
+}
+.app-frame .bottom-nav a {
+  color: var(--day-muted);
+  font-size: 15px;
+  font-weight: 500;
+}
+.app-frame .bottom-nav a[aria-current='page'] {
+  color: var(--day-on-accent);
+  background: var(--day-accent);
+}
+.app-frame .demo-banner {
+  color: var(--day-ink);
+  background: var(--day-surface);
+  border: 1px solid var(--day-line);
+  font-size: 12px;
+  font-weight: 500;
+}
+.app-frame :focus-visible {
+  outline: 3px solid var(--day-accent);
+  outline-offset: 4px;
+}
+.app-frame .editorial-art figcaption {
+  background: var(--day-surface);
+  color: var(--day-ink);
+  border-radius: 12px;
+  padding: 10px 14px;
+}
+.app-frame .editorial-art figcaption span {
+  color: var(--day-muted);
+  font-size: 13px;
+}
+.app-frame .preparation-card.with-photo {
+  grid-row: auto;
+}
+.app-frame .preparation-card .editorial-art {
+  height: 190px;
+}
+.app-frame .timeline-entry.current {
+  border-color: var(--day-accent);
+}
+
+.today-experience {
+  background: radial-gradient(ellipse at 0 0, #e6cbb650, transparent 45%), var(--day-canvas);
 }
 .today-experience .app-main {
-  background: transparent;
+  gap: 24px;
 }
 .today-experience .baby-hero-slot {
-  margin-bottom: 0;
+  min-height: 0;
+  margin: 0;
 }
 .today-experience .baby-hero {
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  grid-template-rows: auto auto 390px auto auto;
+  gap: 0;
+  padding: 0;
+  border-radius: 0;
+  min-height: 0;
+  overflow: visible;
   background: transparent;
-  color: var(--scene-ink);
-  border-radius: 36px;
-  min-height: 680px;
-  padding-bottom: 65px;
+  color: var(--day-ink);
+}
+.today-experience .baby-hero-top {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  min-height: 48px;
+}
+.today-experience .baby-hero-top time {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--day-muted);
+}
+.today-experience .hero-avatar {
+  background: var(--day-surface);
+  border: 1px solid var(--day-line);
+  color: var(--day-accent);
+  font-size: 20px;
+  font-weight: 600;
+}
+.today-experience .baby-hero-intro {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  padding: 16px 0 28px;
+}
+.today-experience .hero-greeting {
+  font-size: 15px !important;
+  color: var(--day-muted);
+  margin-bottom: 4px;
+}
+.today-experience .baby-hero-intro h1 {
+  font-size: 36px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.45;
+  color: var(--day-ink);
+}
+.today-experience .baby-hero-intro > p:last-child {
+  font-size: 15px;
+  color: var(--day-muted);
+  margin-top: 8px;
 }
 .today-experience .baby-visual {
-  background: transparent;
+  grid-row: 3;
+  grid-column: 5 / -1;
+  position: relative;
+  inset: auto;
+  z-index: 0;
+  border-radius: 28px 0 0 28px;
+  background: #e5b49c;
+  overflow: hidden;
 }
 .today-experience .baby-visual img,
 .today-experience .baby-visual video {
-  width: 70% !important;
-  object-position: center 43%;
-  mask-image:
-    linear-gradient(to right, #000 68%, transparent),
-    linear-gradient(to bottom, #000 75%, transparent 100%);
-  mask-composite: intersect;
+  width: 100% !important;
+  height: 100%;
+  inset: 0 !important;
+  object-fit: cover;
+  object-position: center 40%;
+  mask-image: none;
+  filter: none;
 }
 .today-experience .baby-visual::after {
-  background:
-    linear-gradient(270deg, var(--scene-ground), transparent 55%),
-    linear-gradient(0deg, var(--scene-ground), transparent 32%);
-}
-.today-experience .baby-visual.is-ambient {
-  background:
-    radial-gradient(ellipse at 28% 48%, #fffaf2 0 8%, #f6c7af9c 27%, transparent 60%),
-    radial-gradient(ellipse at 78% 8%, #f6e8cf, transparent 55%);
-}
-.today-experience .baby-visual.is-ambient::before {
-  content: '';
-  position: absolute;
-  width: 60%;
-  aspect-ratio: 1;
-  left: -8%;
-  top: 16%;
-  border: 1px solid #fff9eac9;
-  border-radius: 50%;
-  box-shadow:
-    0 0 0 28px #fff8ee28,
-    0 0 0 70px #fff8ee24,
-    0 0 80px #fff5e7;
+  display: none;
 }
 .today-experience .baby-hero-copy {
-  width: 51%;
+  grid-row: 3;
+  grid-column: 1 / 5;
+  position: relative;
+  z-index: 2;
+  width: auto;
+  padding: 32px;
+  border-radius: 0 28px 28px 0;
+  background: var(--day-hero);
+  color: var(--day-on-hero);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-.today-experience .baby-hero-copy h1 {
-  font-weight: 500;
-  font-size: 36px;
-  letter-spacing: -0.03em;
-}
-.today-experience .baby-hero-copy p,
-.today-experience .baby-hero-copy small,
-.today-experience .baby-hero-bottom p,
-.today-experience .baby-hero-top p {
-  color: var(--scene-muted);
-}
-.today-experience .hero-greeting {
-  font-size: 14px !important;
+.today-experience .baby-week {
+  margin: 0;
 }
 .today-experience .baby-week .numeric {
-  font-size: 124px;
+  font-size: 106px;
   font-weight: 400;
-  color: var(--scene-ink);
+  line-height: 1;
+  letter-spacing: -0.06em;
+  color: var(--day-on-hero);
 }
 .today-experience .baby-week strong {
-  font-size: 21px;
+  font-size: 20px;
+  font-weight: 500;
+  margin-top: 12px;
+}
+.today-experience .baby-week small {
+  color: var(--day-hero-secondary);
+  font-size: 14px;
+  margin-top: 4px;
 }
 .today-experience .baby-hero-copy .progress {
-  height: 4px;
-  background: #b9877726;
+  width: 100%;
+  height: 5px;
+  max-width: 220px;
+  background: #775963;
+  margin-block: 22px 16px;
 }
 .today-experience .baby-hero-copy .progress span {
-  background: linear-gradient(90deg, #c38388, #dfa878);
+  background: #e5b49c;
 }
-.today-experience .hero-avatar,
-.today-experience .hero-icon-button,
-.today-experience .hero-watch > span {
-  background: var(--scene-glass);
-  border-color: var(--scene-line);
-  color: var(--scene-ink);
-  box-shadow: 0 4px 20px #89637912;
-  backdrop-filter: blur(16px);
+.today-experience .hero-pregnancy-meta {
+  grid-column: 1 / -1;
+  grid-row: 4;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--day-line);
 }
-.today-experience .hero-watch {
-  color: var(--scene-ink);
-}
-.today-experience .media-review-badge {
-  background: #fff8efd9;
-  color: #79533e;
-  border-color: #d8b59d60;
-}
-.today-experience .baby-size-row {
-  padding-top: 12px;
-}
-.today-experience .baby-size-row h2 {
+.today-experience .hero-pregnancy-meta .trimester {
+  color: var(--day-ink);
+  font-size: 15px;
   font-weight: 500;
 }
+.today-experience .hero-pregnancy-meta > small {
+  display: block;
+  color: var(--day-muted);
+  font-size: 14px;
+  line-height: 1.8;
+  margin-top: 4px;
+}
+.today-experience .hero-open-area {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  position: absolute;
+  z-index: 3;
+  border-radius: 28px;
+}
+.today-experience .hero-open-area:focus-visible {
+  outline: 3px solid var(--day-accent);
+  outline-offset: 5px;
+}
+.today-experience .baby-hero-bottom {
+  grid-row: 5;
+  grid-column: 1 / -1;
+  padding: 16px 0 0;
+  margin: 0;
+}
+.today-experience .media-review-badge {
+  font-size: 12px;
+  background: var(--day-warning);
+  color: var(--day-warning-ink);
+  border: 0;
+  border-radius: 8px;
+  padding: 7px 12px;
+  font-weight: 500;
+}
+.today-experience .media-pending {
+  color: var(--day-muted);
+  font-size: 14px;
+  border-color: var(--day-accent);
+  max-width: none;
+}
+.today-experience .baby-size-row {
+  align-items: center;
+  gap: 16px;
+  padding-top: 16px;
+}
+.today-experience .baby-size-row h2 {
+  color: var(--day-ink);
+  font-size: 18px;
+  font-weight: 600;
+}
+.today-experience .baby-size-row p {
+  color: var(--day-muted);
+  font-size: 14px;
+  margin-top: 4px;
+}
+.today-experience .hero-watch {
+  color: var(--day-accent);
+  font-size: 14px;
+  font-weight: 600;
+  flex-direction: row;
+  gap: 10px;
+  min-height: 48px;
+}
+.today-experience .hero-watch > span {
+  background: var(--day-accent);
+  color: var(--day-on-accent);
+  border: 0;
+  width: 44px;
+  height: 44px;
+  font-size: 24px;
+}
+.today-experience .baby-visual.is-ambient {
+  background: #dec0a4;
+  display: grid;
+  place-items: center;
+}
+.hero-ambient-mark {
+  width: 60%;
+  height: 72%;
+  position: relative;
+  border-radius: 50% 50% 45% 45%;
+  border: 1px solid #fff7ecb3;
+  box-shadow:
+    0 0 0 26px #fff7ec22,
+    0 0 0 56px #fff7ec14;
+  transform: rotate(-18deg);
+}
+.hero-ambient-mark i {
+  position: absolute;
+  inset: 10%;
+  border-radius: inherit;
+  border: 1px solid #9f6c5860;
+}
+.hero-ambient-mark i:nth-child(2) {
+  inset: 23%;
+  background: linear-gradient(140deg, #fff7ec90, #bb856080);
+  border: 0;
+  box-shadow: 10px 15px 25px #78553b25;
+}
+.hero-ambient-mark i:nth-child(3) {
+  inset: 35%;
+  border-color: #fff7ecb3;
+}
+
 .today-experience .scene-next-step {
   position: relative;
-  margin-top: -34px;
-  z-index: 4;
-  margin-bottom: 32px;
-  background: var(--scene-glass);
-  border: 1px solid var(--scene-line);
-  box-shadow: var(--scene-shadow);
-  backdrop-filter: blur(24px);
+  z-index: 1;
+  margin: 8px 0 0;
+  border: 0;
   border-radius: 24px;
-  padding: 22px 24px;
-  gap: 16px;
+  background: var(--day-accent);
+  color: var(--day-on-accent);
+  padding: 26px;
+  gap: 20px;
+  box-shadow: var(--day-shadow);
 }
 .today-experience .scene-next-step > span:nth-child(2) {
   flex: 1;
 }
+.today-experience .scene-next-step small {
+  color: var(--day-on-accent);
+  font-size: 13px;
+  font-weight: 500;
+}
 .today-experience .scene-next-step h2 {
-  font-size: 19px;
+  color: var(--day-on-accent);
+  font-size: 22px;
+  font-weight: 500;
   margin-block: 5px;
-  color: var(--scene-ink);
+  line-height: 1.5;
 }
 .today-experience .scene-next-step p {
-  font-size: 12px;
-  color: var(--scene-muted);
+  color: var(--day-on-accent);
+  font-size: 14px;
 }
-.today-experience .scene-next-step small {
-  font-size: 11px;
-  color: var(--scene-muted);
+.today-experience .scene-next-step .icon-tile {
+  color: var(--day-on-accent);
+  border: 1px solid #b48a9a;
+  background: transparent;
+  width: 48px;
+  height: 48px;
 }
-.today-experience .icon-tile {
-  background: #ffffff70;
-  border: 1px solid #ffffff80;
-  color: inherit;
-  border-radius: 16px;
+.today-experience .section-heading {
+  margin: 16px 0 0;
+  align-items: end;
+}
+.today-experience .section-heading h2 {
+  color: var(--day-ink);
+  font-size: 26px;
+  font-weight: 600;
+}
+.today-experience .section-heading p {
+  font-size: 14px;
 }
 .today-experience .today-bento {
+  margin: 0;
   gap: 16px;
   align-items: stretch;
 }
-.today-experience .today-bento .card {
+.today-experience .today-bento > .card {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  min-height: 190px;
-  border: 1px solid var(--scene-line);
-  box-shadow: var(--scene-shadow);
-  border-radius: 28px;
-  padding: 24px;
-  background: var(--scene-glass);
-  color: var(--scene-ink);
+  min-height: 220px;
+  border: 1px solid var(--day-line);
+  box-shadow: none;
+  border-radius: 24px;
+  padding: 26px;
+  background: var(--day-surface);
+  color: var(--day-ink);
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
   align-items: flex-start;
-  gap: 9px;
+  gap: 10px;
 }
 .today-experience .today-bento h2 {
-  font-size: 21px;
-  font-weight: 500;
+  font-size: 23px;
+  font-weight: 600;
   margin: 0;
-  line-height: 1.65;
+  line-height: 1.5;
+  color: inherit;
 }
 .today-experience .today-bento p {
-  font-size: 13px;
+  font-size: 15px;
+  line-height: 1.8;
   margin: 0;
-  color: var(--scene-muted);
+  color: inherit;
 }
 .today-experience .today-bento small {
-  font-size: 11px;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0;
+  color: inherit;
 }
 .today-experience .today-bento .card-action {
   margin-top: auto;
-  padding-top: 15px;
-  font-size: 12px;
+  padding-top: 18px;
+  font-size: 14px;
+  font-weight: 500;
   color: inherit;
 }
+.today-experience .today-bento .icon-tile {
+  background: transparent;
+  color: inherit;
+  border: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 0;
+  margin-bottom: 8px;
+}
 .today-experience .today-bento .today-appointment {
-  background:
-    radial-gradient(ellipse at 5% 100%, #adc9df70, transparent 65%),
-    linear-gradient(130deg, #f3f3fd, #e5ecf4);
+  background: var(--day-medical);
+  color: var(--day-on-medical);
+  border-color: var(--day-medical);
+}
+.today-experience .today-appointment .badge {
+  color: var(--day-ink);
+  background: var(--day-surface);
 }
 .today-experience .today-bento .journey-tile {
-  background: radial-gradient(ellipse at 100% 100%, #e9c3bc8c, transparent 75%), #f8e6de;
+  background: var(--day-journey);
+  border-color: transparent;
+}
+.scene-path {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 24px;
+  margin: 12px 0;
+}
+.scene-path i {
+  flex: 1;
+  height: 3px;
+  background: #b9927a;
+  position: relative;
+}
+.scene-path i::before {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #72503e;
+  top: -3px;
+  right: 0;
+}
+.scene-path i:nth-child(n + 4) {
+  background: #b9927a;
+}
+.scene-path i:nth-child(n + 4)::before {
+  background: var(--day-journey);
+  border: 1px solid #72503e;
+}
+.scene-path i:last-child {
+  flex: 0;
 }
 .today-experience .today-bento .today-development {
-  background:
-    radial-gradient(ellipse at 0% 90%, #dbbbdab3, transparent 65%),
-    linear-gradient(130deg, #faf2e8, #f4e6ee);
-  padding-inline-end: 25%;
+  padding-inline-end: 27%;
 }
-.today-experience .today-development::after {
+.today-development::after {
   content: '';
   position: absolute;
   z-index: -1;
-  width: 170px;
-  height: 230px;
-  left: -35px;
-  bottom: -95px;
-  border-radius: 50% 50% 10% 50%;
-  transform: rotate(-30deg);
-  border: 1px solid #fff9f2c2;
+  left: -22px;
+  bottom: -40px;
+  width: 145px;
+  height: 190px;
+  border: 1px solid var(--day-line);
+  border-radius: 100% 0;
   box-shadow:
-    0 0 0 24px #fff7f240,
-    0 0 0 50px #fff7f233;
+    0 0 0 18px var(--day-canvas),
+    0 0 0 19px var(--day-line),
+    0 0 0 37px var(--day-canvas);
+  transform: rotate(15deg);
 }
 .today-experience .today-bento .today-readiness {
-  background: radial-gradient(ellipse at 0% 10%, #f6e5c399, transparent 70%), #e9eee5;
+  background: var(--day-readiness);
+  border-color: transparent;
   align-items: center;
   text-align: center;
 }
 .readiness-orbit {
-  width: 136px;
+  width: 142px;
   aspect-ratio: 1;
-  padding: 7px;
+  padding: 8px;
   border-radius: 50%;
-  margin: 8px auto 15px;
-  background: conic-gradient(from -90deg, #739883 var(--readiness), #b7c5b942 0);
-  box-shadow:
-    0 0 0 9px #ffffff38,
-    0 14px 26px #64806f12;
+  margin: 8px auto 20px;
+  background: conic-gradient(
+    from -90deg,
+    var(--day-ring) var(--readiness),
+    var(--day-ring-track) 0
+  );
 }
 .readiness-orbit-core {
   width: 100%;
   height: 100%;
-  border: 1px solid #ffffffb0;
-  background: #eef0e7;
+  background: var(--day-ring-center);
   border-radius: 50%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: #456751;
+  color: #2d4938;
 }
 .readiness-orbit-core strong {
-  font-size: 37px;
-  font-weight: 400;
+  font-size: 40px;
+  font-weight: 600;
   line-height: 1.4;
 }
 .readiness-orbit-core strong small {
-  font-size: 16px;
+  font-size: 16px !important;
+  display: inline;
 }
 .readiness-orbit-core > span {
-  font-size: 10px;
-}
-.scene-path {
-  display: flex;
-  align-items: center;
-  width: 105px;
-  height: 44px;
-  margin-bottom: 4px;
-}
-.scene-path i {
-  width: 12px;
-  height: 12px;
-  background: #bf8c7e;
-  border: 3px solid #faede5;
-  box-shadow: 0 0 0 1px #cf9f92;
-  border-radius: 50%;
-  position: relative;
-  margin-inline-end: 30px;
-}
-.scene-path i:not(:last-child)::after {
-  content: '';
-  position: absolute;
-  width: 30px;
-  height: 1px;
-  background: #cf9f92;
-  right: 9px;
-  top: 3px;
-}
-.scene-path i:last-child {
-  background: #faede5;
+  font-size: 12px;
 }
 .today-experience .sheet-trigger {
-  background: #fffaf575;
-  border-color: var(--scene-line);
-  margin-top: 24px;
-  color: var(--scene-ink);
+  background: var(--day-surface);
+  border: 1px solid var(--day-line);
+  border-inline-start: 4px solid var(--day-accent);
+  border-radius: 16px;
+  color: var(--day-ink);
+  padding: 20px;
+  font-size: 15px;
+  text-align: start;
+}
+.today-experience .sheet-trigger small {
+  color: var(--day-muted);
+  font-size: 13px;
 }
 .today-experience .quiet-note {
-  color: var(--scene-muted);
-  background: transparent;
+  margin: 0;
+  padding: 8px 0;
+  background: none;
   border: 0;
+  color: var(--day-muted);
+  font-size: 14px;
 }
+.today-experience .quiet-note p {
+  color: var(--day-muted);
+  font-size: 14px;
+}
+.today-experience .finance-hero {
+  background: var(--day-hero);
+  color: var(--day-on-hero);
+  border-radius: 24px;
+}
+.today-experience .finance-hero :is(p, small, h2) {
+  color: var(--day-on-hero);
+}
+
+/* The existing element and video remain mounted while expanding. */
 .today-experience .baby-hero.expanded {
-  background: var(--scene-ground);
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: var(--day-canvas);
+  color: var(--day-ink);
+  padding: 24px max(24px, calc((100vw - 1000px) / 2));
+  height: 100dvh;
+  width: 100%;
+  overflow-y: auto;
+  z-index: 100;
   border-radius: 0;
+}
+.today-experience .baby-hero.expanded .baby-visual {
   min-height: 0;
+  position: relative;
+  inset: auto;
+  flex: 0 0 min(42vh, 420px);
+  width: 100%;
+  order: 1;
+  border-radius: 24px;
+  background: #edc7b2;
 }
 .today-experience .baby-hero.expanded .baby-visual img {
-  width: 100% !important;
-  mask-image: none;
+  object-fit: contain;
+  object-position: center;
 }
-.today-experience .baby-hero.expanded .baby-visual::after {
-  background: linear-gradient(180deg, #fcf2ea80, transparent 35%, #fcf2eab3);
+.today-experience .baby-hero.expanded .baby-hero-top {
+  order: 0;
+  flex-shrink: 0;
+  text-align: center;
+}
+.today-experience .baby-hero.expanded .baby-hero-top p {
+  color: var(--day-muted);
+  font-size: 14px;
+}
+.today-experience .hero-icon-button {
+  background: var(--day-surface);
+  border: 1px solid var(--day-line);
+  color: var(--day-ink);
+}
+.today-experience .hero-media-controls {
+  order: 2;
+  min-height: 0;
 }
 .today-experience .hero-media-controls > span {
-  background: var(--scene-glass);
-  color: var(--scene-muted);
+  background: var(--day-surface);
+  color: var(--day-muted);
+  font-size: 14px;
+  border: 1px solid var(--day-line);
+}
+.today-experience .baby-hero.expanded .baby-hero-bottom {
+  order: 3;
+  padding: 0;
 }
 .today-experience .baby-detail-sheet {
-  background: var(--scene-glass);
-  color: var(--scene-ink);
-  backdrop-filter: blur(24px);
+  background: var(--day-surface);
+  color: var(--day-ink);
+  border: 1px solid var(--day-line);
+  margin-top: 16px;
 }
-@media (min-width: 701px) {
-  .demo-scene-bento {
+.today-experience .baby-detail-sheet p,
+.today-experience .baby-detail-sheet small {
+  color: var(--day-muted);
+  font-size: 14px;
+}
+.today-experience .baby-detail-sheet li {
+  font-size: 15px;
+}
+.today-experience .baby-detail-sheet h3 {
+  font-size: 22px;
+}
+.today-experience .baby-detail-sheet .sheet-handle {
+  display: none;
+}
+.today-experience .baby-detail-sheet .baby-measurements {
+  font-size: 16px;
+}
+.today-experience .baby-detail-sheet .baby-measurements small {
+  font-size: 13px;
+}
+
+@media (min-width: 1000px) {
+  .today-experience .app-main {
+    max-width: 1140px;
+  }
+  .today-experience .baby-hero {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    grid-template-rows: 48px auto auto auto auto;
+    column-gap: 32px;
+  }
+  .today-experience .baby-hero-top {
+    grid-column: 1 / 7;
+    grid-row: 1;
+  }
+  .today-experience .baby-hero-intro {
+    grid-column: 1 / 7;
+    grid-row: 2;
+    padding-bottom: 20px;
+  }
+  .today-experience .baby-visual {
+    grid-column: 7 / -1;
+    grid-row: 1 / 6;
+    min-height: 580px;
+    border-radius: 180px 180px 28px 28px;
+  }
+  .today-experience .baby-hero-copy {
+    grid-column: 1 / 7;
+    grid-row: 3;
+    padding: 26px 30px;
+    border-radius: 24px;
+  }
+  .today-experience .baby-week {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 24px;
+  }
+  .today-experience .baby-week .numeric {
+    grid-row: span 2;
+    font-size: 86px;
+  }
+  .today-experience .baby-week strong {
+    align-self: end;
+  }
+  .today-experience .baby-hero-copy .progress {
+    max-width: none;
+    margin-block: 18px 12px;
+  }
+  .today-experience .hero-pregnancy-meta {
+    grid-column: 1 / 7;
+  }
+  .today-experience .baby-hero-bottom {
+    grid-column: 1 / 7;
+    grid-row: 5;
+  }
+  .today-experience .hero-open-area {
+    grid-column: 7 / -1;
+    grid-row: 1 / 6;
+    border-radius: 180px 180px 28px 28px;
+  }
+  .today-experience .demo-scene-bento {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
   .demo-scene-bento .today-appointment {
@@ -342,80 +760,18 @@ body:has(.today-experience) {
   .demo-scene-bento .today-readiness {
     grid-column: 3;
     grid-row: 1 / 3;
-    justify-content: center;
+    justify-content: center !important;
   }
 }
-@media (max-width: 700px) {
-  .today-experience .baby-hero-slot {
-    min-height: 685px;
-    margin-inline: -20px;
-  }
-  .today-experience .baby-hero {
-    min-height: 685px;
-    border-radius: 0;
-    padding: 24px 24px 64px;
-  }
-  .today-experience .baby-visual img,
-  .today-experience .baby-visual video {
-    width: 100% !important;
-    object-position: center 37%;
-    mask-image: linear-gradient(to bottom, #000 72%, transparent);
-  }
-  .today-experience .baby-visual::after {
-    background:
-      linear-gradient(270deg, #fcf2ead9, #fcf2ea60 38%, transparent 66%),
-      linear-gradient(0deg, var(--scene-ground), transparent 32%);
-  }
-  .today-experience .baby-hero-copy {
-    width: 75%;
-    padding-top: 24px;
-  }
-  .today-experience .baby-hero-copy h1 {
-    font-size: 29px;
-  }
-  .today-experience .baby-hero-copy > p:not(.hero-greeting) {
-    font-size: 12px;
-    max-width: 27ch;
-  }
-  .today-experience .baby-week {
-    margin-top: 22px;
-  }
-  .today-experience .baby-week .numeric {
-    font-size: 96px;
-  }
-  .today-experience .baby-hero-copy .progress {
-    margin-block: 14px 10px;
-    width: 110px;
-  }
-  .today-experience .baby-hero-copy .trimester {
-    max-width: 19ch;
-  }
-  .today-experience .scene-next-step {
-    padding: 18px;
-    gap: 12px;
-    margin-top: -32px;
-  }
-  .today-experience .scene-next-step h2 {
-    font-size: 17px;
-  }
+@media (max-width: 999px) {
   .today-experience .today-bento {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
   }
-  .today-experience .today-bento .card {
+  .today-experience .today-bento > .card {
     grid-column: span 1;
-    padding: 18px;
-    border-radius: 24px;
-    min-height: 190px;
   }
-  .today-experience .today-bento h2 {
-    font-size: 19px;
-  }
-  .today-experience .today-bento .wide {
+  .today-experience .today-bento > .wide {
     grid-column: span 2;
-  }
-  .today-experience .today-bento .today-development {
-    padding-inline-end: 28%;
   }
   .today-experience .demo-scene-bento .today-readiness {
     grid-column: span 2;
@@ -423,78 +779,239 @@ body:has(.today-experience) {
     grid-template-columns: 140px 1fr;
     text-align: start;
     align-items: center;
-    column-gap: 20px;
+    gap: 10px 24px;
   }
   .demo-scene-bento .readiness-orbit {
     grid-row: span 3;
-    margin: 12px 0;
+    margin: 0;
   }
   .today-experience .today-readiness .card-action {
     padding-top: 0;
     margin-top: 0;
   }
-  .today-experience .bottom-nav {
-    background: #fffaf2e8;
-    backdrop-filter: blur(24px);
-    border: 1px solid #ffffffc9;
-    box-shadow: 0 -4px 32px #916c7b12;
+}
+@media (max-width: 700px) {
+  .app-frame .bottom-nav {
+    background: var(--day-surface);
+    border: 1px solid var(--day-line);
+    box-shadow: 0 -6px 28px #36232910;
+    backdrop-filter: none;
+    padding: 6px 6px calc(6px + env(safe-area-inset-bottom));
+    border-radius: 20px;
+  }
+  .app-frame .bottom-nav a {
+    font-size: 12px;
+    min-height: 54px;
+    padding: 7px 4px;
+    gap: 3px;
+  }
+  .app-frame .bottom-nav a[aria-current='page'] {
+    background: var(--day-accent);
+    color: var(--day-on-accent);
+    border-radius: 14px;
+  }
+  .app-frame .demo-banner {
+    bottom: calc(93px + env(safe-area-inset-bottom));
+    font-size: 12px;
+    padding: 4px 10px;
+    box-shadow: none;
+  }
+  .today-experience .app-main {
+    padding: 20px 20px 144px;
+    gap: 24px;
+  }
+  .today-experience .baby-hero {
+    grid-template-rows: auto auto 320px auto auto;
+  }
+  .today-experience .baby-hero-intro {
+    padding: 16px 0 24px;
+  }
+  .today-experience .baby-hero-intro h1 {
+    font-size: 32px;
+  }
+  .today-experience .baby-hero-intro > p:last-child {
+    font-size: 14px;
+    margin-top: 6px;
+  }
+  .today-experience .baby-hero-copy {
+    padding: 20px 16px;
+  }
+  .today-experience .baby-week .numeric {
+    font-size: 78px;
+  }
+  .today-experience .baby-week strong {
+    font-size: 17px;
+    margin-top: 8px;
+  }
+  .today-experience .baby-week small {
+    font-size: 13px;
+  }
+  .today-experience .baby-hero-copy .trimester {
+    font-size: 13px;
+    max-width: none;
+  }
+  .today-experience .baby-hero-copy > small {
+    font-size: 12px;
+    line-height: 1.7;
+    max-width: none;
+  }
+  .today-experience .baby-hero-copy .progress {
+    margin-block: 16px 12px;
+  }
+  .today-experience .baby-size-row h2 {
+    font-size: 16px;
+  }
+  .today-experience .baby-size-row p {
+    font-size: 13px;
+  }
+  .today-experience .hero-watch {
+    font-size: 13px;
+    gap: 8px;
+  }
+  .today-experience .hero-watch > span {
+    width: 38px;
+    height: 38px;
+  }
+  .today-experience .scene-next-step {
+    padding: 22px 20px;
+    gap: 14px;
+    margin: 0;
+    align-items: flex-start;
+  }
+  .today-experience .scene-next-step .icon-tile {
+    width: 36px;
+    height: 36px;
+    border: 0;
+  }
+  .today-experience .scene-next-step > svg {
+    display: none;
+  }
+  .today-experience .scene-next-step h2 {
+    font-size: 21px;
+  }
+  .today-experience .scene-next-step p {
+    font-size: 14px;
+  }
+  .today-experience .section-heading {
+    margin: 4px 0 0;
+    display: block;
+  }
+  .today-experience .section-heading h2 {
+    font-size: 26px;
+  }
+  .today-experience .section-heading p {
+    margin-top: 4px;
+  }
+  .today-experience .today-bento {
+    gap: 12px;
+  }
+  .today-experience .today-bento > .card {
+    padding: 20px;
+    border-radius: 20px;
+    min-height: 225px;
+  }
+  .today-experience .today-bento h2 {
+    font-size: 20px;
+  }
+  .today-experience .today-bento p {
+    font-size: 14px;
+  }
+  .today-experience .today-bento .card-action {
+    font-size: 13px;
+  }
+  .today-experience .today-development h2 {
+    font-size: 28px;
+  }
+  .today-experience .today-bento .today-readiness {
+    min-height: 205px;
+  }
+  .today-experience .baby-hero.expanded {
+    padding: 20px;
+    gap: 16px;
+  }
+  .today-experience .baby-hero.expanded .baby-hero-top p {
+    font-size: 12px;
+  }
+  .today-experience .baby-detail-sheet {
+    padding: 20px;
   }
 }
-@media (max-width: 370px) {
+@media (max-width: 380px) {
+  .today-experience .app-main {
+    padding-inline: 16px;
+  }
+  .today-experience .baby-hero-copy {
+    padding-inline: 12px;
+  }
+  .today-experience .baby-week .numeric {
+    font-size: 68px;
+  }
+  .today-experience .today-bento > .card {
+    padding: 16px;
+  }
   .today-experience .demo-scene-bento .today-readiness {
-    grid-template-columns: 110px 1fr;
+    grid-template-columns: 108px 1fr;
     gap: 12px;
   }
   .readiness-orbit {
     width: 108px;
   }
-  .today-experience .today-bento .card {
-    padding: 15px;
+  .readiness-orbit-core strong {
+    font-size: 32px;
+  }
+  .readiness-orbit-core > span {
+    font-size: 10px;
+  }
+  .today-experience .baby-size-row {
+    gap: 10px;
+  }
+  .today-experience .hero-watch {
+    flex-direction: column;
+    font-size: 12px;
+    gap: 4px;
   }
 }
-.theme-dark .today-experience {
-  --scene-ground: #211e26;
-  --scene-glass: #332b34e6;
-  --scene-ink: #f9e9df;
-  --scene-muted: #d3bdb8;
-  --scene-line: #fff4e419;
-  background: radial-gradient(ellipse at 0% 25%, #68474660, transparent 60%), var(--scene-ground);
-}
-.theme-dark .today-experience .today-bento .card {
-  background: var(--scene-glass);
-}
-.theme-dark .today-experience .baby-visual img {
-  filter: brightness(0.65);
-}
-.theme-dark .today-experience .baby-visual::after {
-  background:
-    linear-gradient(270deg, var(--scene-ground), transparent 70%),
-    linear-gradient(0deg, var(--scene-ground), transparent 38%);
-}
-.theme-dark .today-experience .bottom-nav {
-  background: var(--scene-glass);
+.theme-dark .app-frame {
+  --day-canvas: #201a1d;
+  --day-surface: #30272b;
+  --day-ink: #fff5ea;
+  --day-muted: #dec9cc;
+  --day-line: #79636b;
+  --day-accent: #ebc1af;
+  --day-on-accent: #362329;
+  --day-journey: #4a3432;
+  --day-readiness: #343e32;
+  --day-warning: #503b26;
+  --day-warning-ink: #ffe2b9;
 }
 @media (prefers-color-scheme: dark) {
-  .theme-system .today-experience {
-    --scene-ground: #211e26;
-    --scene-glass: #332b34e6;
-    --scene-ink: #f9e9df;
-    --scene-muted: #d3bdb8;
-    --scene-line: #fff4e419;
-    background: radial-gradient(ellipse at 0% 25%, #68474660, transparent 60%), var(--scene-ground);
+  .theme-system .app-frame {
+    --day-canvas: #201a1d;
+    --day-surface: #30272b;
+    --day-ink: #fff5ea;
+    --day-muted: #dec9cc;
+    --day-line: #79636b;
+    --day-accent: #ebc1af;
+    --day-on-accent: #362329;
+    --day-journey: #4a3432;
+    --day-readiness: #343e32;
+    --day-warning: #503b26;
+    --day-warning-ink: #ffe2b9;
   }
-  .theme-system .today-experience .today-bento .card {
-    background: var(--scene-glass);
+}
+@media (prefers-reduced-motion: reduce) {
+  .today-experience a,
+  .today-experience button {
+    transition: none;
   }
-  .theme-system .today-experience .baby-visual img {
-    filter: brightness(0.65);
+  .today-experience a:hover {
+    transform: none;
   }
-  .theme-system .today-experience .baby-visual::after {
-    background:
-      linear-gradient(270deg, var(--scene-ground), transparent 70%),
-      linear-gradient(0deg, var(--scene-ground), transparent 38%);
-  }
-  .theme-system .today-experience .bottom-nav {
-    background: var(--scene-glass);
-  }
+}
+.reduce-motion .today-experience a,
+.reduce-motion .today-experience button {
+  transition: none;
+}
+.reduce-motion .today-experience a:hover {
+  transform: none;
 }

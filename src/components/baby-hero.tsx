@@ -32,7 +32,7 @@ export function BabyHero({
   const [imageFailed, setImageFailed] = useState(false),
     [shareStatus, setShareStatus] = useState('');
   const [clip, setClip] = useState('inset(0 round 28px)');
-  const [greeting, setGreeting] = useState('رحلتكم مستمرة');
+  const [greeting, setGreeting] = useState('أهلاً بعائلتكم');
   const hero = useRef<HTMLElement>(null),
     video = useRef<HTMLVideoElement>(null),
     close = useRef<HTMLButtonElement>(null),
@@ -169,6 +169,13 @@ export function BabyHero({
           className={'baby-visual' + (!media.poster || imageFailed ? ' is-ambient' : '')}
           aria-hidden="true"
         >
+          {(!media.poster || imageFailed) && (
+            <span className="hero-ambient-mark" aria-hidden="true">
+              <i />
+              <i />
+              <i />
+            </span>
+          )}
           {media.poster && !imageFailed && (
             <Image
               src={media.poster}
@@ -246,10 +253,14 @@ export function BabyHero({
           )}
         </header>
         {!expanded && (
-          <div className="baby-hero-copy">
+          <div className="baby-hero-intro">
             <p className="hero-greeting">{greeting}</p>
             <h1>رحلتكم مستمرة</h1>
             <p>{mother ? 'مع كل يوم، تنمو الحياة بداخلك' : 'مع كل يوم، تنمو الحياة بينكم'}</p>
+          </div>
+        )}
+        {!expanded && (
+          <div className="baby-hero-copy">
             <div className="baby-week">
               <span className="numeric">{weeks}</span>
               <strong>الأسبوع</strong>
@@ -265,6 +276,10 @@ export function BabyHero({
             >
               <span style={{ width: p.progress + '%' }} />
             </div>
+          </div>
+        )}
+        {!expanded && (
+          <div className="hero-pregnancy-meta">
             <p className="trimester">
               {mother ? 'أنتِ' : 'نحن'} في الثلث {['الأول', 'الثاني', 'الثالث'][p.trimester - 1]} من
               الحمل
@@ -316,7 +331,7 @@ export function BabyHero({
                 {media.length && <p>يبلغ الطول حوالي {media.length}</p>}
               </div>
               <button className="hero-watch" onClick={open}>
-                <span>▷</span>شاهد التطور
+                <span aria-hidden="true">↗</span>شاهد التطور
               </button>
             </div>
           ) : (
