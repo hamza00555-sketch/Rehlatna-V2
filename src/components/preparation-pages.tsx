@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { EditorialArt, categoryArt } from './editorial-art';
 import { Sheet } from './sheet';
 import { notFound } from 'next/navigation';
 import { productContext, records } from '@/lib/product-server';
@@ -63,10 +64,11 @@ function ItemList({ items }: { items: Item[] }) {
               .filter((i) => i.item_type === 'large')
               .map((i) => (
                 <Link className="product-tile" key={i.id} href={'/preparation/item/' + i.id}>
-                  <div className="product-art">
-                    <Icon name={i.category === 'clothes' ? 'clothes' : 'preparation'} />
-                    <small>صورة الغرض قيد الإعداد</small>
-                  </div>
+                  <EditorialArt
+                    kind={categoryArt(i.category)}
+                    compact
+                    caption="صورة توضيحية للفئة"
+                  />
                   <h3>{i.title}</h3>
                   <Badge tone={i.status}>{statuses[i.status]}</Badge>
                 </Link>
@@ -154,10 +156,10 @@ export async function PreparationPages({
         active="preparation"
         back={'/preparation/' + item.category}
       >
-        <div className="product-art">
-          <Icon name="preparation" />
-          <small>صورة الغرض قيد الإعداد</small>
-        </div>
+        <EditorialArt
+          kind={categoryArt(item.category)}
+          caption="صورة توضيحية للفئة · أضيفوا تفاصيل غرضكم في الملاحظات"
+        />
         <div className="filter-chips">
           {item.hospital_bag && <Badge>ضمن حقيبة المستشفى</Badge>}
           {goalId && <Badge>مرتبط بهدف تمويل</Badge>}
@@ -218,6 +220,11 @@ export async function PreparationPages({
       active="preparation"
       back={section ? '/preparation' : '/today'}
     >
+      <EditorialArt
+        kind={bag ? 'bag' : section ? categoryArt(section) : 'essentials'}
+        title={bag ? 'نرتّبها ليوم اللقاء' : 'أشياء صغيرة، نجهّزها بحب'}
+        priority
+      />
       {edit && (
         <Link
           className="button"

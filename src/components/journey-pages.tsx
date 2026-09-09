@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { EditorialArt } from './editorial-art';
 import { NameForm } from './name-form';
 import { notFound, redirect } from 'next/navigation';
 import { productContext, records } from '@/lib/product-server';
@@ -126,6 +127,12 @@ export async function JourneyPages({
         active="journey"
         back="/today"
       >
+        <EditorialArt
+          kind="journey"
+          title="رحلة واحدة… نعيشها معاً"
+          caption="من أول خبر إلى أول لقاء"
+          priority
+        />
         <div className="filter-chips">
           {ctx.can('appointments.edit') && (
             <Link href="/journey/appointments/new">+ إضافة موعد</Link>

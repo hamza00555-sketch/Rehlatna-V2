@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { EditorialArt, type EditorialKind } from '@/components/editorial-art';
 import { BabyHero } from '@/components/baby-hero';
 import { DangerSigns } from '@/components/sheet';
 import {
@@ -43,6 +44,7 @@ export default async function Demo({ searchParams }: { searchParams: Promise<{ t
             </Link>
             <div className="bento">
               <Link href="/demo?tab=preparation" className="card ready feature-card">
+                <EditorialArt kind="essentials" compact caption="تفاصيل صغيرة" />
                 <span className="icon-tile">
                   <Icon name="preparation" />
                 </span>
@@ -104,6 +106,7 @@ export default async function Demo({ searchParams }: { searchParams: Promise<{ t
               ))}
             </section>
             <aside className="journey-note">
+              <EditorialArt kind="journey" compact caption="كل محطة تقرّبنا" />
               <Icon name="heart" />
               <h2>
                 لسنا في سباق.
@@ -122,6 +125,7 @@ export default async function Demo({ searchParams }: { searchParams: Promise<{ t
             description="نستفيد من الموجود، ونختار ما يناسب عائلتنا."
           />
           <PreparationSummary ready={1} total={4} />
+          <EditorialArt kind="essentials" title="نهيّئ مكاناً للحياة الجديدة" priority />
           <SectionHeading title="قائمة الصغير" subtitle="أمثلة للتجهيز" />
           <div className="preparation-grid">
             {[
@@ -131,14 +135,14 @@ export default async function Demo({ searchParams }: { searchParams: Promise<{ t
               ['heart', 'حقيبة المستشفى', 'لاحقًا', 'نرتّبها قبل يوم اللقاء'],
             ].map(([icon, title, status, description], i) => (
               <article
-                className={'card preparation-card ' + (i === 0 ? 'ready with-photo' : '')}
+                className={'card preparation-card with-photo ' + (i === 0 ? 'ready' : '')}
                 key={title}
               >
-                {i === 0 && (
-                  <div className="preparation-photo">
-                    <NurseryImage />
-                  </div>
-                )}
+                <EditorialArt
+                  kind={(['nursery', 'journey', 'essentials', 'bag'] as EditorialKind[])[i]}
+                  compact
+                  caption="صورة توضيحية للفئة"
+                />
                 <div className="row">
                   <span className="icon-tile">
                     <Icon name={icon} />
@@ -162,6 +166,7 @@ export default async function Demo({ searchParams }: { searchParams: Promise<{ t
             description="لكل شخص حسابه. نشارك ما يجمعنا، ونحتفظ بما يخصّنا."
           />
           <section className="family-hero">
+            <EditorialArt kind="journey" compact caption="مساحة تجمعكم" />
             <div className="family-emblem">
               <Icon name="family" />
             </div>

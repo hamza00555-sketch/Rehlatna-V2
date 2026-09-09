@@ -27,7 +27,7 @@ export function WeekPage({
         title={`الأسبوع ${week}`}
         description={week === current ? 'أسبوعكم الحالي' : undefined}
       />
-      <div className="week-media-frame">
+      <div className={'week-media-frame' + (!media.poster ? ' is-ambient' : '')}>
         {media.poster ? (
           <Image
             src={media.poster}

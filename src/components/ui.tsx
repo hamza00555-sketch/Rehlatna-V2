@@ -167,7 +167,7 @@ export function Empty({ title, children }: { title: string; children: ReactNode 
 export function NurseryImage({ priority = false }: { priority?: boolean }) {
   return (
     <Image
-      src="/images/nursery.webp"
+      src="/images/editorial/nursery.webp"
       alt=""
       fill
       sizes="(max-width: 700px) 100vw, 600px"

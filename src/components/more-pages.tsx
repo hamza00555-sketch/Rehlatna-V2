@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { EditorialArt } from './editorial-art';
 import { notFound } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { productContext, records } from '@/lib/product-server';
@@ -127,6 +128,14 @@ export async function MorePages({
         }
         back="/today"
       >
+        {!section && (
+          <EditorialArt
+            kind="journey"
+            title="الرحلة أجمل معاً"
+            caption="مساحة تجمع عائلتكم"
+            priority
+          />
+        )}
         <div className="product-grid">
           {members.map((m) => (
             <Link className="product-tile" key={m.user_id} href={'/more/family/' + m.user_id}>

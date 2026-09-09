@@ -1,5 +1,6 @@
 export const dynamic = 'force-dynamic';
 import Link from 'next/link';
+import { EditorialArt } from '@/components/editorial-art';
 import { ActionForm } from '@/components/form';
 import { productAction } from '@/app/product-actions';
 import { BabyHero } from '@/components/baby-hero';
@@ -276,6 +277,7 @@ export default async function Today() {
         )}
         {ctx.can('preparation.view') && (
           <Link className="card ready" href="/preparation">
+            <EditorialArt kind="essentials" compact caption="نجهّز بحب، وعلى مهل" />
             <Icon name="preparation" />
             <h2>جاهزية التجهيز</h2>
             <Progress

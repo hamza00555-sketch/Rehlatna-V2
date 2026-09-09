@@ -165,7 +165,10 @@ export function BabyHero({
           }
         }}
       >
-        <div className="baby-visual" aria-hidden="true">
+        <div
+          className={'baby-visual' + (!media.poster || imageFailed ? ' is-ambient' : '')}
+          aria-hidden="true"
+        >
           {media.poster && !imageFailed && (
             <Image
               src={media.poster}
