@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic';
 import Link from 'next/link';
-import { EditorialArt } from '@/components/editorial-art';
+import { ReadinessRing } from '@/components/readiness-ring';
 import { ActionForm } from '@/components/form';
 import { productAction } from '@/app/product-actions';
 import { BabyHero } from '@/components/baby-hero';
@@ -148,7 +148,7 @@ export default async function Today() {
   const age = born ? Math.max(0, -daysBetween(p.birth_date)) : 0,
     media = weeklyMedia(week);
   return (
-    <Shell active="today">
+    <Shell active="today" immersive>
       {ctx.can('journey.view') ? (
         born ? (
           <section className="story-panel">
@@ -225,7 +225,7 @@ export default async function Today() {
         <p className="notice">تغيّر الأسبوع المعروض لأن موعد الوصول المتوقع تم تعديله.</p>
       )}
       {action && (
-        <Link className="card warm detail-row" href={action.href}>
+        <Link className="card warm detail-row scene-next-step" href={action.href}>
           <span className="icon-tile">
             <Icon name="arrow" />
           </span>
@@ -240,7 +240,9 @@ export default async function Today() {
         {next && (
           <Link
             href={'/journey/appointments/' + next.id}
-            className={'card medical ' + (daysBetween(next.starts_at) <= 2 ? 'wide' : '')}
+            className={
+              'card medical today-appointment ' + (daysBetween(next.starts_at) <= 2 ? 'wide' : '')
+            }
           >
             <Icon name="calendar" />
             <small>الموعد القادم</small>
@@ -267,7 +269,9 @@ export default async function Today() {
         )}
         {!born && ctx.can('journey.view') && (
           <Link
-            className={'card ' + (!next || daysBetween(next.starts_at) > 2 ? 'wide' : '')}
+            className={
+              'card today-development ' + (!next || daysBetween(next.starts_at) > 2 ? 'wide' : '')
+            }
             href="/today/week"
           >
             <small>تطور الصغير</small>
@@ -276,9 +280,8 @@ export default async function Today() {
           </Link>
         )}
         {ctx.can('preparation.view') && (
-          <Link className="card ready" href="/preparation">
-            <EditorialArt kind="essentials" compact caption="نجهّز بحب، وعلى مهل" />
-            <Icon name="preparation" />
+          <Link className="card ready today-readiness" href="/preparation">
+            <ReadinessRing ready={ready} total={counted.length} />
             <h2>جاهزية التجهيز</h2>
             <Progress
               value={counted.length ? (ready / counted.length) * 100 : 0}

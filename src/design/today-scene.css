@@ -1,0 +1,499 @@
+/* Today is one luminous scene. Artwork is confined to its matching reviewed status;
+   ambient light and abstract orbits remain available when no weekly media exists. */
+.today-experience {
+  --scene-ground: #fcf2ea;
+  --scene-glass: #fffaf5d9;
+  --scene-ink: #493632;
+  --scene-muted: #79605c;
+  --scene-line: #ffffffb3;
+  --scene-shadow: 0 16px 44px #916c7b13;
+  background:
+    radial-gradient(ellipse at 0% 15%, #f2cac585, transparent 45%),
+    radial-gradient(ellipse at 95% 53%, #e3d9ec99, transparent 43%),
+    radial-gradient(ellipse at 10% 83%, #eed4ad70, transparent 36%), var(--scene-ground);
+}
+body:has(.today-experience) {
+  background: var(--color-canvas);
+}
+.today-experience .app-main {
+  background: transparent;
+}
+.today-experience .baby-hero-slot {
+  margin-bottom: 0;
+}
+.today-experience .baby-hero {
+  background: transparent;
+  color: var(--scene-ink);
+  border-radius: 36px;
+  min-height: 680px;
+  padding-bottom: 65px;
+}
+.today-experience .baby-visual {
+  background: transparent;
+}
+.today-experience .baby-visual img,
+.today-experience .baby-visual video {
+  width: 70% !important;
+  object-position: center 43%;
+  mask-image:
+    linear-gradient(to right, #000 68%, transparent),
+    linear-gradient(to bottom, #000 75%, transparent 100%);
+  mask-composite: intersect;
+}
+.today-experience .baby-visual::after {
+  background:
+    linear-gradient(270deg, var(--scene-ground), transparent 55%),
+    linear-gradient(0deg, var(--scene-ground), transparent 32%);
+}
+.today-experience .baby-visual.is-ambient {
+  background:
+    radial-gradient(ellipse at 28% 48%, #fffaf2 0 8%, #f6c7af9c 27%, transparent 60%),
+    radial-gradient(ellipse at 78% 8%, #f6e8cf, transparent 55%);
+}
+.today-experience .baby-visual.is-ambient::before {
+  content: '';
+  position: absolute;
+  width: 60%;
+  aspect-ratio: 1;
+  left: -8%;
+  top: 16%;
+  border: 1px solid #fff9eac9;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 28px #fff8ee28,
+    0 0 0 70px #fff8ee24,
+    0 0 80px #fff5e7;
+}
+.today-experience .baby-hero-copy {
+  width: 51%;
+}
+.today-experience .baby-hero-copy h1 {
+  font-weight: 500;
+  font-size: 36px;
+  letter-spacing: -0.03em;
+}
+.today-experience .baby-hero-copy p,
+.today-experience .baby-hero-copy small,
+.today-experience .baby-hero-bottom p,
+.today-experience .baby-hero-top p {
+  color: var(--scene-muted);
+}
+.today-experience .hero-greeting {
+  font-size: 14px !important;
+}
+.today-experience .baby-week .numeric {
+  font-size: 124px;
+  font-weight: 400;
+  color: var(--scene-ink);
+}
+.today-experience .baby-week strong {
+  font-size: 21px;
+}
+.today-experience .baby-hero-copy .progress {
+  height: 4px;
+  background: #b9877726;
+}
+.today-experience .baby-hero-copy .progress span {
+  background: linear-gradient(90deg, #c38388, #dfa878);
+}
+.today-experience .hero-avatar,
+.today-experience .hero-icon-button,
+.today-experience .hero-watch > span {
+  background: var(--scene-glass);
+  border-color: var(--scene-line);
+  color: var(--scene-ink);
+  box-shadow: 0 4px 20px #89637912;
+  backdrop-filter: blur(16px);
+}
+.today-experience .hero-watch {
+  color: var(--scene-ink);
+}
+.today-experience .media-review-badge {
+  background: #fff8efd9;
+  color: #79533e;
+  border-color: #d8b59d60;
+}
+.today-experience .baby-size-row {
+  padding-top: 12px;
+}
+.today-experience .baby-size-row h2 {
+  font-weight: 500;
+}
+.today-experience .scene-next-step {
+  position: relative;
+  margin-top: -34px;
+  z-index: 4;
+  margin-bottom: 32px;
+  background: var(--scene-glass);
+  border: 1px solid var(--scene-line);
+  box-shadow: var(--scene-shadow);
+  backdrop-filter: blur(24px);
+  border-radius: 24px;
+  padding: 22px 24px;
+  gap: 16px;
+}
+.today-experience .scene-next-step > span:nth-child(2) {
+  flex: 1;
+}
+.today-experience .scene-next-step h2 {
+  font-size: 19px;
+  margin-block: 5px;
+  color: var(--scene-ink);
+}
+.today-experience .scene-next-step p {
+  font-size: 12px;
+  color: var(--scene-muted);
+}
+.today-experience .scene-next-step small {
+  font-size: 11px;
+  color: var(--scene-muted);
+}
+.today-experience .icon-tile {
+  background: #ffffff70;
+  border: 1px solid #ffffff80;
+  color: inherit;
+  border-radius: 16px;
+}
+.today-experience .today-bento {
+  gap: 16px;
+  align-items: stretch;
+}
+.today-experience .today-bento .card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 190px;
+  border: 1px solid var(--scene-line);
+  box-shadow: var(--scene-shadow);
+  border-radius: 28px;
+  padding: 24px;
+  background: var(--scene-glass);
+  color: var(--scene-ink);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 9px;
+}
+.today-experience .today-bento h2 {
+  font-size: 21px;
+  font-weight: 500;
+  margin: 0;
+  line-height: 1.65;
+}
+.today-experience .today-bento p {
+  font-size: 13px;
+  margin: 0;
+  color: var(--scene-muted);
+}
+.today-experience .today-bento small {
+  font-size: 11px;
+}
+.today-experience .today-bento .card-action {
+  margin-top: auto;
+  padding-top: 15px;
+  font-size: 12px;
+  color: inherit;
+}
+.today-experience .today-bento .today-appointment {
+  background:
+    radial-gradient(ellipse at 5% 100%, #adc9df70, transparent 65%),
+    linear-gradient(130deg, #f3f3fd, #e5ecf4);
+}
+.today-experience .today-bento .journey-tile {
+  background: radial-gradient(ellipse at 100% 100%, #e9c3bc8c, transparent 75%), #f8e6de;
+}
+.today-experience .today-bento .today-development {
+  background:
+    radial-gradient(ellipse at 0% 90%, #dbbbdab3, transparent 65%),
+    linear-gradient(130deg, #faf2e8, #f4e6ee);
+  padding-inline-end: 25%;
+}
+.today-experience .today-development::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  width: 170px;
+  height: 230px;
+  left: -35px;
+  bottom: -95px;
+  border-radius: 50% 50% 10% 50%;
+  transform: rotate(-30deg);
+  border: 1px solid #fff9f2c2;
+  box-shadow:
+    0 0 0 24px #fff7f240,
+    0 0 0 50px #fff7f233;
+}
+.today-experience .today-bento .today-readiness {
+  background: radial-gradient(ellipse at 0% 10%, #f6e5c399, transparent 70%), #e9eee5;
+  align-items: center;
+  text-align: center;
+}
+.readiness-orbit {
+  width: 136px;
+  aspect-ratio: 1;
+  padding: 7px;
+  border-radius: 50%;
+  margin: 8px auto 15px;
+  background: conic-gradient(from -90deg, #739883 var(--readiness), #b7c5b942 0);
+  box-shadow:
+    0 0 0 9px #ffffff38,
+    0 14px 26px #64806f12;
+}
+.readiness-orbit-core {
+  width: 100%;
+  height: 100%;
+  border: 1px solid #ffffffb0;
+  background: #eef0e7;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #456751;
+}
+.readiness-orbit-core strong {
+  font-size: 37px;
+  font-weight: 400;
+  line-height: 1.4;
+}
+.readiness-orbit-core strong small {
+  font-size: 16px;
+}
+.readiness-orbit-core > span {
+  font-size: 10px;
+}
+.scene-path {
+  display: flex;
+  align-items: center;
+  width: 105px;
+  height: 44px;
+  margin-bottom: 4px;
+}
+.scene-path i {
+  width: 12px;
+  height: 12px;
+  background: #bf8c7e;
+  border: 3px solid #faede5;
+  box-shadow: 0 0 0 1px #cf9f92;
+  border-radius: 50%;
+  position: relative;
+  margin-inline-end: 30px;
+}
+.scene-path i:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 1px;
+  background: #cf9f92;
+  right: 9px;
+  top: 3px;
+}
+.scene-path i:last-child {
+  background: #faede5;
+}
+.today-experience .sheet-trigger {
+  background: #fffaf575;
+  border-color: var(--scene-line);
+  margin-top: 24px;
+  color: var(--scene-ink);
+}
+.today-experience .quiet-note {
+  color: var(--scene-muted);
+  background: transparent;
+  border: 0;
+}
+.today-experience .baby-hero.expanded {
+  background: var(--scene-ground);
+  border-radius: 0;
+  min-height: 0;
+}
+.today-experience .baby-hero.expanded .baby-visual img {
+  width: 100% !important;
+  mask-image: none;
+}
+.today-experience .baby-hero.expanded .baby-visual::after {
+  background: linear-gradient(180deg, #fcf2ea80, transparent 35%, #fcf2eab3);
+}
+.today-experience .hero-media-controls > span {
+  background: var(--scene-glass);
+  color: var(--scene-muted);
+}
+.today-experience .baby-detail-sheet {
+  background: var(--scene-glass);
+  color: var(--scene-ink);
+  backdrop-filter: blur(24px);
+}
+@media (min-width: 701px) {
+  .demo-scene-bento {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  .demo-scene-bento .today-appointment {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .demo-scene-bento .journey-tile {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .demo-scene-bento .today-development {
+    grid-column: 1 / 3;
+    grid-row: 2;
+  }
+  .demo-scene-bento .today-readiness {
+    grid-column: 3;
+    grid-row: 1 / 3;
+    justify-content: center;
+  }
+}
+@media (max-width: 700px) {
+  .today-experience .baby-hero-slot {
+    min-height: 685px;
+    margin-inline: -20px;
+  }
+  .today-experience .baby-hero {
+    min-height: 685px;
+    border-radius: 0;
+    padding: 24px 24px 64px;
+  }
+  .today-experience .baby-visual img,
+  .today-experience .baby-visual video {
+    width: 100% !important;
+    object-position: center 37%;
+    mask-image: linear-gradient(to bottom, #000 72%, transparent);
+  }
+  .today-experience .baby-visual::after {
+    background:
+      linear-gradient(270deg, #fcf2ead9, #fcf2ea60 38%, transparent 66%),
+      linear-gradient(0deg, var(--scene-ground), transparent 32%);
+  }
+  .today-experience .baby-hero-copy {
+    width: 75%;
+    padding-top: 24px;
+  }
+  .today-experience .baby-hero-copy h1 {
+    font-size: 29px;
+  }
+  .today-experience .baby-hero-copy > p:not(.hero-greeting) {
+    font-size: 12px;
+    max-width: 27ch;
+  }
+  .today-experience .baby-week {
+    margin-top: 22px;
+  }
+  .today-experience .baby-week .numeric {
+    font-size: 96px;
+  }
+  .today-experience .baby-hero-copy .progress {
+    margin-block: 14px 10px;
+    width: 110px;
+  }
+  .today-experience .baby-hero-copy .trimester {
+    max-width: 19ch;
+  }
+  .today-experience .scene-next-step {
+    padding: 18px;
+    gap: 12px;
+    margin-top: -32px;
+  }
+  .today-experience .scene-next-step h2 {
+    font-size: 17px;
+  }
+  .today-experience .today-bento {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .today-experience .today-bento .card {
+    padding: 18px;
+    border-radius: 24px;
+    min-height: 190px;
+  }
+  .today-experience .today-bento h2 {
+    font-size: 19px;
+  }
+  .today-experience .today-bento .wide {
+    grid-column: span 2;
+  }
+  .today-experience .today-bento .today-development {
+    padding-inline-end: 28%;
+  }
+  .today-experience .demo-scene-bento .today-readiness {
+    grid-column: span 2;
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    text-align: start;
+    align-items: center;
+    column-gap: 20px;
+  }
+  .demo-scene-bento .readiness-orbit {
+    grid-row: span 3;
+    margin: 12px 0;
+  }
+  .today-experience .today-readiness .card-action {
+    padding-top: 0;
+    margin-top: 0;
+  }
+  .today-experience .bottom-nav {
+    background: #fffaf2e8;
+    backdrop-filter: blur(24px);
+    border: 1px solid #ffffffc9;
+    box-shadow: 0 -4px 32px #916c7b12;
+  }
+}
+@media (max-width: 370px) {
+  .today-experience .demo-scene-bento .today-readiness {
+    grid-template-columns: 110px 1fr;
+    gap: 12px;
+  }
+  .readiness-orbit {
+    width: 108px;
+  }
+  .today-experience .today-bento .card {
+    padding: 15px;
+  }
+}
+.theme-dark .today-experience {
+  --scene-ground: #211e26;
+  --scene-glass: #332b34e6;
+  --scene-ink: #f9e9df;
+  --scene-muted: #d3bdb8;
+  --scene-line: #fff4e419;
+  background: radial-gradient(ellipse at 0% 25%, #68474660, transparent 60%), var(--scene-ground);
+}
+.theme-dark .today-experience .today-bento .card {
+  background: var(--scene-glass);
+}
+.theme-dark .today-experience .baby-visual img {
+  filter: brightness(0.65);
+}
+.theme-dark .today-experience .baby-visual::after {
+  background:
+    linear-gradient(270deg, var(--scene-ground), transparent 70%),
+    linear-gradient(0deg, var(--scene-ground), transparent 38%);
+}
+.theme-dark .today-experience .bottom-nav {
+  background: var(--scene-glass);
+}
+@media (prefers-color-scheme: dark) {
+  .theme-system .today-experience {
+    --scene-ground: #211e26;
+    --scene-glass: #332b34e6;
+    --scene-ink: #f9e9df;
+    --scene-muted: #d3bdb8;
+    --scene-line: #fff4e419;
+    background: radial-gradient(ellipse at 0% 25%, #68474660, transparent 60%), var(--scene-ground);
+  }
+  .theme-system .today-experience .today-bento .card {
+    background: var(--scene-glass);
+  }
+  .theme-system .today-experience .baby-visual img {
+    filter: brightness(0.65);
+  }
+  .theme-system .today-experience .baby-visual::after {
+    background:
+      linear-gradient(270deg, var(--scene-ground), transparent 70%),
+      linear-gradient(0deg, var(--scene-ground), transparent 38%);
+  }
+  .theme-system .today-experience .bottom-nav {
+    background: var(--scene-glass);
+  }
+}

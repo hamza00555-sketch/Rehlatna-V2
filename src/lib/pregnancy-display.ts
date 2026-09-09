@@ -37,7 +37,7 @@ export function weeklyMedia(week: number, demo = false): WeeklyMedia {
   if (week === 24)
     return {
       ...empty,
-      ...(demo ? { poster: '/media/weekly/week-24.preview.webp' } : {}),
+      ...(demo ? { poster: '/media/weekly/week-24.luminous.preview.webp' } : {}),
       summary:
         'تبدو ملامح صغيركم أكثر وضوحاً، مع استمرار النمو داخل الرحم. يختلف النمو بين حمل وآخر، والقياسات هنا تقريبية.',
       points: [

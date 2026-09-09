@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { EditorialArt, type EditorialKind } from '@/components/editorial-art';
 import { BabyHero } from '@/components/baby-hero';
+import { ReadinessRing } from '@/components/readiness-ring';
 import { DangerSigns } from '@/components/sheet';
 import {
   Shell,
@@ -16,7 +17,7 @@ export default async function Demo({ searchParams }: { searchParams: Promise<{ t
     ? tab!
     : 'today';
   return (
-    <Shell active={active} demo>
+    <Shell active={active} demo immersive={active === 'today'}>
       {active === 'today' ? (
         <>
           <BabyHero
@@ -26,45 +27,62 @@ export default async function Demo({ searchParams }: { searchParams: Promise<{ t
             demo
             dateIso={new Date().toISOString()}
           />
-          <SectionHeading title="تفاصيل يومكم" subtitle="على مهلكم، خطوة بخطوة" />
-          <div className="today-grid">
-            <Link href="/demo?tab=journey" className="card medical appointment-card card-link">
-              <div className="row">
-                <span className="icon-tile">
-                  <Icon name="calendar" />
-                </span>
-                <span className="badge">الموعد القادم · مثال</span>
-              </div>
+          <Link href="/demo?tab=journey" className="card scene-next-step detail-row">
+            <span className="icon-tile">
+              <Icon name="calendar" />
+            </span>
+            <span>
+              <small>الخطوة التالية</small>
+              <h2>نرتّب أسئلتنا قبل الموعد</h2>
+              <p>مساحة لكل ما تودّون مناقشته مع الطبيب</p>
+            </span>
+            <Icon name="arrow" />
+          </Link>
+          <SectionHeading title="تفاصيل تطمئنكم" subtitle="على مهلكم، خطوة بخطوة" />
+          <div className="today-bento demo-scene-bento">
+            <Link href="/demo?tab=journey" className="card medical today-appointment">
+              <span className="icon-tile">
+                <Icon name="calendar" />
+              </span>
+              <small>الموعد القادم · مثال</small>
               <h2>نطمئن على صغيرنا</h2>
               <p>متابعة الحمل مع الطبيب</p>
-              <div className="appointment-footer">
-                <span>الموعد والمكان وتفاصيل الزيارة</span>
-                <Icon name="arrow" />
-              </div>
+              <span className="card-action">
+                تفاصيل الموعد <Icon name="arrow" />
+              </span>
             </Link>
-            <div className="bento">
-              <Link href="/demo?tab=preparation" className="card ready feature-card">
-                <EditorialArt kind="essentials" compact caption="تفاصيل صغيرة" />
-                <span className="icon-tile">
-                  <Icon name="preparation" />
-                </span>
-                <h3>التجهيز على مهل</h3>
-                <p>شيء صغير نجهّزه بحب</p>
-                <span className="card-action">
-                  قائمة الصغير <Icon name="arrow" />
-                </span>
-              </Link>
-              <Link href="/demo?tab=more" className="card private-card feature-card">
-                <span className="icon-tile">
-                  <Icon name="lock" />
-                </span>
-                <h3>قريبون، وبخصوصية</h3>
-                <p>لكل واحد مساحته</p>
-                <span className="card-action">
-                  مساحة العائلة <Icon name="arrow" />
-                </span>
-              </Link>
-            </div>
+            <Link href="/demo?tab=journey" className="card journey-tile">
+              <span className="scene-path" aria-hidden="true">
+                <i />
+                <i />
+                <i />
+              </span>
+              <small>أين نحن في الرحلة</small>
+              <h2>تكبر الحكاية</h2>
+              <p>الثلث الثاني من الحمل</p>
+              <span className="card-action">
+                محطاتكم القادمة <Icon name="arrow" />
+              </span>
+            </Link>
+            <Link href="/demo/week?week=24" className="card today-development wide">
+              <span className="icon-tile">
+                <Icon name="leaf" />
+              </span>
+              <small>تطور الصغير</small>
+              <h2>كل أسبوع، حكاية جديدة</h2>
+              <p>تعرّفوا على تطور صغيركم في الأسبوع 24، وما يهم في هذه المرحلة.</p>
+              <span className="card-action">
+                اكتشفوا هذا الأسبوع <Icon name="arrow" />
+              </span>
+            </Link>
+            <Link href="/demo?tab=preparation" className="card ready today-readiness">
+              <ReadinessRing ready={1} total={4} />
+              <h2>نهيّئ له مكانًا</h2>
+              <p>1 من 4 متوفر · نحتاجه: 1</p>
+              <span className="card-action">
+                التجهيز على مهل <Icon name="arrow" />
+              </span>
+            </Link>
           </div>
           <DangerSigns />
           <div className="quiet-note">

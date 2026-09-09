@@ -85,14 +85,22 @@ export function Shell({
   children,
   active,
   demo = false,
+  immersive = false,
 }: {
   children: ReactNode;
   active: string;
   demo?: boolean;
+  immersive?: boolean;
 }) {
   return (
     <>
-      <div className={'app-frame' + (active === 'today' ? ' hero-layout' : '')}>
+      <div
+        className={
+          'app-frame' +
+          (active === 'today' ? ' hero-layout' : '') +
+          (immersive ? ' today-experience' : '')
+        }
+      >
         <header className="top app-top">
           <Brand />
           <span className="brand-caption">كل يوم أقرب إلى اللقاء</span>
