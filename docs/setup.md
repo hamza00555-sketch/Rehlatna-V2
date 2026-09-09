@@ -8,6 +8,10 @@
 6. Build and deploy, then verify two real test accounts (email + Google), invitation email binding, another household, sharing, logout, revoked membership and expired links. The browser flow must use the same browser for email PKCE initiation and callback.
 7. For email-link delivery, configure production SMTP and provider rate limits before public signup. App responses do not enumerate existing accounts. Invitation links are manually shared by the inviter; the app does not claim it sent an invitation email.
 
+Google sign-in is opt-in: set `GOOGLE_AUTH_ENABLED=true` only after its provider credentials and redirects work in Supabase. Without this flag the Google button is omitted and the server action rejects direct requests. Email login remains available independently.
+
+Current V2 project and deployment details are recorded in `implementation-status.md`. Both initial migrations have already been applied to that project; do not run them again. Deployment-level environment values are not evidence that project-wide environment values or Git integration are configured.
+
 ## Production gate
 
 Create independent production environment variables and a production database. Take a backup and prove restoration on a disposable project before transferring any real data. Use versioned SQL migrations and a dry-run data conversion script before any legacy migration. Vercel code rollback does **not** roll back a database migration.

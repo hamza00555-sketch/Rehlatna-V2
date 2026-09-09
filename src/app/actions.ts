@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
 import { randomBytes, createHash } from 'node:crypto';
 import { z } from 'zod';
-import { appOrigin, context, db, requireUser } from '@/lib/supabase';
+import { appOrigin, context, db, googleEnabled, requireUser } from '@/lib/supabase';
 import { familySchema, inviteSchema, safeNext, shortText, uuid } from '@/lib/validation';
 export type FormState = { error?: string; success?: string; inviteUrl?: string };
 const bad: FormState = { error: 'تعذر حفظ التغيير. راجع البيانات وصلاحية حسابك ثم حاول مرة أخرى.' };
@@ -25,6 +25,7 @@ export async function emailLogin(_: FormState, form: FormData): Promise<FormStat
       };
 }
 export async function googleLogin(form: FormData) {
+  if (!googleEnabled()) redirect('/auth?error=provider');
   const client = await db();
   const next = safeNext(form.get('next'));
   const { data, error } = await client.auth.signInWithOAuth({
@@ -165,14 +166,12 @@ export async function addAppointment(_: FormState, form: FormData): Promise<Form
     })
     .safeParse(Object.fromEntries(form));
   if (!p.success) return { error: 'راجع عنوان الموعد والتاريخ والمكان.' };
-  const { error } = await ctx.client
-    .from('appointments')
-    .insert({
-      household_id: ctx.householdId,
-      title: p.data.title,
-      starts_at: p.data.startsAt,
-      location: p.data.location,
-    });
+  const { error } = await ctx.client.from('appointments').insert({
+    household_id: ctx.householdId,
+    title: p.data.title,
+    starts_at: p.data.startsAt,
+    location: p.data.location,
+  });
   if (error) return bad;
   revalidatePath('/journey');
   return { success: 'أُضيف الموعد إلى رحلتكم.' };

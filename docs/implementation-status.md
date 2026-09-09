@@ -17,8 +17,15 @@
 
 ## Remaining setup
 
-- No hosted Supabase project has been connected or migrated for V2. Supabase dashboard requires sign-in through the secure browser flow.
-- Required application configuration: `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `APP_URL`. No values configured yet; no service-role key belongs in this app.
+- Supabase sign-in is complete. Created isolated free project `rehlatna-v2-preview`, ref `zhknyqqjlrdiscmmbfqb`, in Frankfurt (`eu-central-1`). The legacy `rehlatna` project is untouched.
+- Applied both checked-in SQL migrations once through the authenticated SQL Editor. Both returned `Success. No rows returned`. Full SQL text was checked against the local files before execution. Automatic RLS was enabled and automatic exposure of new tables disabled at project creation.
+- Configured `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, and `APP_URL` locally and in the new deployment. Only the publishable key was used. No service-role key or database password was copied into the app or repository.
+- Supabase Site URL is `https://rehlatna-v2.vercel.app`. Allowed callback is `https://rehlatna-v2.vercel.app/auth/callback**`, scoped to the app origin and callback prefix so the validated `next` query can be preserved.
+- Connected deployment `dpl_3jUxtZsxSAQEBKXV9EVn9y1EZVWc` is READY on the same project domain. Production build and TypeScript succeeded with the real public configuration. Deployment environment values were supplied through the Vercel connector; project-wide persistence and automatic Git deployments are not yet verified.
+- Live API checks: auth settings return HTTP 200 with email enabled and Google disabled; anonymous reads of `households` and `private_records` are rejected with HTTP 401 / PostgreSQL `42501`.
+- Browser confirms the deployed email form is enabled. Google UI and server action are guarded by `GOOGLE_AUTH_ENABLED=true`, which remains false until its provider is configured and verified.
+- The automated email sign-in test was blocked by automatic approval review: an explicit recipient and authorization to send the login email are required. No login email was sent by that attempt. Hosted login/callback and two-account family/sharing acceptance tests therefore remain unverified.
+- Google OAuth credentials and custom SMTP have not been configured; broader signup/email delivery is not validated.
 - No live accounts, medical records or financial data were uploaded. Demo content is fictional and read-only.
-- Provision an isolated Supabase project, verify project identity and environment configuration, apply both SQL migrations once, configure exact auth callbacks and enabled providers, then redeploy and test two accounts and two families.
+- Next: obtain explicit authorization for the test email recipient, verify the email callback in the initiating browser, test two accounts and two families, configure Google/custom SMTP, and verify persistent project environment settings and Git integration before public onboarding.
 - Existing application and its production database remain untouched.

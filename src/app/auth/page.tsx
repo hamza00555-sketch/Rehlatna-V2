@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { Brand, PageTitle } from '@/components/ui';
 import { ActionForm } from '@/components/form';
-import { configured, user } from '@/lib/supabase';
+import { configured, googleEnabled, user } from '@/lib/supabase';
 import { safeNext } from '@/lib/validation';
 import { emailLogin, googleLogin } from '@/app/actions';
 export default async function Auth({
@@ -32,12 +32,14 @@ export default async function Auth({
           تعذر إكمال الدخول. جرّب رابطًا جديدًا أو طريقة أخرى.
         </p>
       )}
-      <form action={googleLogin}>
-        <input type="hidden" name="next" value={next} />
-        <button className="button secondary full" disabled={!ready}>
-          المتابعة بحساب Google
-        </button>
-      </form>
+      {googleEnabled() && (
+        <form action={googleLogin}>
+          <input type="hidden" name="next" value={next} />
+          <button className="button secondary full" disabled={!ready}>
+            المتابعة بحساب Google
+          </button>
+        </form>
+      )}
       <div className="card">
         <ActionForm action={emailLogin} label="أرسل رابط الدخول" disabled={!ready}>
           <input type="hidden" name="next" value={next} />

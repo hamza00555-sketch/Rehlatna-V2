@@ -8,6 +8,9 @@ export function configured() {
     process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
   );
 }
+export function googleEnabled() {
+  return configured() && process.env.GOOGLE_AUTH_ENABLED === 'true';
+}
 export function appOrigin() {
   const raw = process.env.APP_URL;
   if (!raw) throw new Error('APP_URL is required');
