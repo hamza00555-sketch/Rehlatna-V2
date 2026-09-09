@@ -323,13 +323,17 @@ export async function productAction(_: FormState, f: FormData): Promise<FormStat
           program: str('program', 120),
           notes: str('notes'),
         };
-        if (f.get('id')) {
-          await update('providers', row);
-          next = `/more/providers/${kind}/${id()}`;
-        } else {
-          const r = await insert('providers', { ...row, kind });
-          next = `/more/providers/${kind}/${r[0].id}`;
-        }
+        const result = await ctx.client.rpc('save_provider', {
+          hid: ctx.householdId,
+          pid: optionalId('id'),
+          value: { ...row, kind },
+          linked_hospitals: f
+            .getAll('linked_hospitals')
+            .filter(Boolean)
+            .map((v) => uuid.parse(v)),
+        });
+        if (result.error || !result.data) throw Error('save');
+        next = `/more/providers/${kind}/${result.data}`;
         break;
       }
       case 'provider-delete':
@@ -369,6 +373,16 @@ export async function productAction(_: FormState, f: FormData): Promise<FormStat
               support: str('support', 300),
               preferences: str('preferences'),
             },
+          }),
+        );
+        break;
+      case 'travel-step':
+        need('care.edit');
+        await check(
+          ctx.client.rpc('toggle_travel_step', {
+            hid: ctx.householdId,
+            step_index: z.coerce.number().int().min(0).max(39).parse(f.get('index')),
+            is_done: f.get('done') === 'true',
           }),
         );
         break;

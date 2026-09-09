@@ -36,6 +36,12 @@ await db.exec(
     'utf8',
   ),
 );
+await db.exec(
+  await readFile(
+    new URL('../supabase/migrations/202609090004_relations.sql', import.meta.url),
+    'utf8',
+  ),
+);
 const owner = '10000000-0000-4000-8000-000000000001',
   planner = '10000000-0000-4000-8000-000000000002',
   supporter = '10000000-0000-4000-8000-000000000003',
@@ -199,4 +205,88 @@ test('deleting shared preparation does not reveal or prevent private linked goal
       .item_id,
     null,
   );
+});
+
+test('provider relationship validation is atomic and blocks foreign hospitals', async () => {
+  const value = {
+    kind: 'doctor',
+    name: 'Test doctor',
+    city: 'Riyadh',
+    phone: '',
+    website: '',
+    doctor_role: 'follow',
+    specialty: '',
+    purposes: [],
+    coverage: 'unknown',
+    program: '',
+    notes: '',
+  };
+  await assert.rejects(
+    as(owner, () =>
+      db.query('select save_provider($1,null,$2,$3)', [hid, JSON.stringify(value), [other]]),
+    ),
+  );
+  assert.equal(
+    (await as(owner, () => rows("select id from providers where name='Test doctor'"))).length,
+    0,
+  );
+  const result = await as(owner, () =>
+    rows('select save_provider($1,null,$2,$3) id', [hid, JSON.stringify(value), []]),
+  );
+  assert.equal(result.length, 1);
+  await assert.rejects(
+    as(planner, () =>
+      db.query('select save_provider($1,null,$2,$3)', [hid, JSON.stringify(value), []]),
+    ),
+  );
+});
+test('contribution audit records the financing effect without revealing it to other members', async () => {
+  const audit = await as(planner, () =>
+    rows(
+      'select before_value,after_value from finance_changes where goal_id=$1 order by changed_at desc',
+      [goal],
+    ),
+  );
+  assert(
+    audit.some(
+      (r) =>
+        (r.after_value as Record<string, unknown>)._reason === 'أُضيفت مساهمة جديدة، فقلّ المتبقي.',
+    ),
+  );
+  assert.equal((await as(supporter, () => rows('select * from finance_changes'))).length, 0);
+});
+
+test('travel editor preserves completed steps while checkbox can reopen them', async () => {
+  await as(owner, () =>
+    db.query("select save_care_plan($1,'travel',$2)", [
+      hid,
+      JSON.stringify({
+        travel_from: 'R',
+        travel_to: 'M',
+        travel_steps: [{ title: 'Tickets', done: false }],
+        travel_notes: '',
+      }),
+    ]),
+  );
+  await as(owner, () => db.query('select toggle_travel_step($1,0,true)', [hid]));
+  await as(owner, () =>
+    db.query("select save_care_plan($1,'travel',$2)", [
+      hid,
+      JSON.stringify({
+        travel_from: 'R',
+        travel_to: 'M',
+        travel_steps: [{ title: 'Tickets', done: false }],
+        travel_notes: 'updated',
+      }),
+    ]),
+  );
+  const r = await as(owner, () =>
+    rows('select travel_steps from care_plans where household_id=$1', [hid]),
+  );
+  assert.equal((r[0].travel_steps as { done: boolean }[])[0].done, true);
+  await as(owner, () => db.query('select toggle_travel_step($1,0,false)', [hid]));
+  const reopened = await as(owner, () =>
+    rows('select travel_steps from care_plans where household_id=$1', [hid]),
+  );
+  assert.equal((reopened[0].travel_steps as { done: boolean }[])[0].done, false);
 });

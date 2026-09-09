@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Sheet } from './sheet';
 import { notFound } from 'next/navigation';
 import { productContext, records } from '@/lib/product-server';
 import { categories, statuses, type Item } from '@/lib/product';
@@ -297,14 +298,13 @@ export async function PreparationPages({
 }
 export function DeleteForm({ action, id, title }: { action: string; id: string; title: string }) {
   return (
-    <details className="card danger-zone section-space">
-      <summary>{title}</summary>
+    <Sheet title={title} trigger={title}>
       <p>هل أنتم متأكدون؟ لا يمكن التراجع عن الحذف.</p>
       <ActionForm action={productAction} label="تأكيد الحذف">
         <input type="hidden" name="action" value={action} />
         <input type="hidden" name="id" value={id} />
         <Toggle name="confirm" label="نعم، نؤكد الحذف" />
       </ActionForm>
-    </details>
+    </Sheet>
   );
 }

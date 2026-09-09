@@ -162,7 +162,7 @@ export function goalNumbers(
     saved,
     remaining,
     months,
-    monthly: Math.ceil(remaining / months),
+    monthly: Math.ceil(remaining / 100 / months) * 100,
     percent: target ? Math.min(100, Math.round((saved / target) * 100)) : 100,
     status,
   };
@@ -195,3 +195,26 @@ export const medicalDisclaimer =
   'رحلتنا يساعدك على تنظيم متابعة الحمل، لكنه لا يستبدل نصيحة الطبيب أو مقدم الرعاية الصحية.';
 export const insuranceDisclaimer =
   'قد تختلف تفاصيل التغطية حسب نوع الوثيقة والشروط؛ التواصل مع شركة التأمين هو الطريقة الوحيدة للتأكد.';
+
+export function monthDate(value: string, offset: number) {
+  const d = new Date(value + 'T12:00:00Z'),
+    day = d.getUTCDate();
+  d.setUTCDate(1);
+  d.setUTCMonth(d.getUTCMonth() + offset);
+  const last = new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth() + 1, 0, 12)).getUTCDate();
+  d.setUTCDate(Math.min(day, last));
+  return d.toISOString().slice(0, 10);
+}
+export function babyAge(birth: string, sex = 'unknown', today = isoToday()) {
+  const days = Math.max(0, -daysBetween(birth, today));
+  if (days === 0) return 'يوم الولادة';
+  const prefix = sex === 'male' ? 'عمره' : sex === 'female' ? 'عمرها' : 'العمر';
+  if (days < 14) return `${prefix} ${days} أيام`;
+  let months =
+    (Number(today.slice(0, 4)) - Number(birth.slice(0, 4))) * 12 +
+    Number(today.slice(5, 7)) -
+    Number(birth.slice(5, 7));
+  if (monthDate(birth, months) > today) months--;
+  if (months < 2) return `${prefix} ${Math.floor(days / 7)} أسابيع و${days % 7} أيام`;
+  return `${prefix} ${months} أشهر و${-daysBetween(monthDate(birth, months), today)} أيام`;
+}

@@ -1,12 +1,23 @@
 export const dynamic = 'force-dynamic';
 import Link from 'next/link';
+import { ActionForm } from '@/components/form';
+import { productAction } from '@/app/product-actions';
 import { BabyHero } from '@/components/baby-hero';
 import { DangerSigns } from '@/components/sheet';
 import { Shell, Empty, Icon } from '@/components/ui';
 import { Progress, RowLink } from '@/components/product-ui';
 import { productContext, records } from '@/lib/product-server';
 import { gestation } from '@/lib/validation';
-import { dateLabel, daysBetween, isoToday, goalNumbers, money, type Goal } from '@/lib/product';
+import {
+  babyAge,
+  taskKinds,
+  dateLabel,
+  daysBetween,
+  isoToday,
+  goalNumbers,
+  money,
+  type Goal,
+} from '@/lib/product';
 import { weeklyMedia } from '@/lib/pregnancy-display';
 import { careWindows, windowState, type WindowAppointment } from '@/lib/care-windows';
 export default async function Today() {
@@ -149,12 +160,32 @@ export default async function Today() {
             <div className="story-orbit" />
             <h1>{p.baby_name || 'صغيركم'}</h1>
             <div className="fact-number">{age}</div>
-            <p>{age === 0 ? 'يوم الولادة' : 'يوماً من الحكاية'}</p>
+            <p>{babyAge(p.birth_date, p.sex)}</p>
             {age < 40 && <p>الأربعين · اليوم {age + 1} من 40</p>}
             <small>خامة وضوء هادئان — لا صورة شخصية بعد</small>
+            <h2>اليوم مع صغيركم</h2>
+            {tasks
+              .filter((t) => !t.task_date || t.task_date === isoToday())
+              .slice(0, 5)
+              .map((t) => (
+                <div className="card" key={t.id}>
+                  <p>
+                    {t.done ? '✓ ' : ''}
+                    {t.title}
+                  </p>
+                  <small>{taskKinds[t.kind as keyof typeof taskKinds]}</small>
+                  {ctx.can('care.edit') && (
+                    <ActionForm action={productAction} label={t.done ? 'إعادة فتح' : 'تم'}>
+                      <input type="hidden" name="action" value="postpartum-done" />
+                      <input type="hidden" name="id" value={t.id} />
+                      <input type="hidden" name="done" value={String(!t.done)} />
+                    </ActionForm>
+                  )}
+                </div>
+              ))}
             <RowLink
               href="/journey/postpartum"
-              title="اليوم مع صغيركم"
+              title="الأربعين وكل المهام"
               sub={
                 tasks
                   .filter((t) => !t.done && (!t.task_date || t.task_date === isoToday()))

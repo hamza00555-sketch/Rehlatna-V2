@@ -164,6 +164,13 @@ export async function FinancePages({ path = [], itemId }: { path?: string[]; ite
             {changes.map((c) => (
               <article key={c.id}>
                 <small>{dateLabel(c.changed_at)}</small>
+                {c.after_value._reason && <p>{c.after_value._reason}</p>}
+                {c.before_value._monthly !== undefined && (
+                  <p>
+                    المطلوب شهرياً سابقاً: {money(Number(c.before_value._monthly), currency)} ←
+                    المطلوب شهرياً الآن: {money(Number(c.after_value._monthly), currency)}
+                  </p>
+                )}
                 <p>
                   التكلفة المستهدفة:{' '}
                   {money(

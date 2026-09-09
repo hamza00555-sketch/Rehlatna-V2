@@ -29,10 +29,14 @@ function ProviderForm({
   provider,
   kind = 'doctor',
   city = '',
+  hospitals = [],
+  links = [],
 }: {
   provider?: Provider;
   kind?: string;
   city?: string;
+  hospitals?: Provider[];
+  links?: string[];
 }) {
   const k = provider?.kind ?? kind;
   return (
@@ -97,6 +101,31 @@ function ProviderForm({
             <p className="notice">{insuranceDisclaimer}</p>
           </>
         )}
+        {k === 'doctor' && (
+          <Select
+            name="linked_hospitals"
+            label="المستشفى أو العيادة · اختياري"
+            options={Object.fromEntries(hospitals.map((h) => [h.id, h.name]))}
+            value={links[0] ?? ''}
+            empty
+          />
+        )}
+        {k === 'insurance' && (
+          <>
+            <h3>المستشفيات المرشّحة</h3>
+            {hospitals.map((h) => (
+              <label className="toggle-row" key={h.id}>
+                {h.name}
+                <input
+                  name="linked_hospitals"
+                  type="checkbox"
+                  value={h.id}
+                  defaultChecked={links.includes(h.id)}
+                />
+              </label>
+            ))}
+          </>
+        )}
         <Notes
           label={k === 'insurance' ? 'ملاحظات التغطية · اختياري' : 'ملاحظات · اختياري'}
           value={provider?.notes}
@@ -116,6 +145,7 @@ export async function CarePages({
   if (!ctx.can('care.view')) return <PrivatePage />;
   const providers = (await records('providers', 'care.view')) as Provider[],
     edit = ctx.can('care.edit');
+  const links = await records('provider_links', 'care.view');
   const [section, key, id] = path;
   if (section === 'providers') {
     if (key === 'new' || key === 'edit') {
@@ -149,6 +179,8 @@ export async function CarePages({
           )}
           <ProviderForm
             key={kind}
+            hospitals={providers.filter((p) => p.kind === 'hospital')}
+            links={links.filter((l) => l.parent_id === provider?.id).map((l) => String(l.child_id))}
             provider={provider}
             kind={kind}
             city={ctx.household?.follow_city}
@@ -263,6 +295,26 @@ export async function CarePages({
                   badge={a.status === 'completed' ? 'مكتمل' : undefined}
                 />
               ))}
+            </section>
+          )}
+          {links.some((l) => l.parent_id === p.id || l.child_id === p.id) && (
+            <section className="section-space">
+              <h2>{p.kind === 'insurance' ? 'المستشفيات المرشّحة' : 'الرعاية الصحية المرتبطة'}</h2>
+              {links
+                .filter((l) => l.parent_id === p.id || l.child_id === p.id)
+                .map((l) =>
+                  providers.find((x) => x.id === (l.parent_id === p.id ? l.child_id : l.parent_id)),
+                )
+                .filter((x): x is Provider => Boolean(x))
+                .map((x) => (
+                  <RowLink
+                    key={x.id}
+                    href={`/more/providers/${x.kind}/${x.id}`}
+                    title={x.name}
+                    sub={x.city}
+                    badge={x.kind === 'hospital' ? coverageNames[x.coverage] : undefined}
+                  />
+                ))}
             </section>
           )}
           {p.notes && (
@@ -434,6 +486,21 @@ export async function CarePages({
           <p className="notice">مدينة المتابعة هي مدينة الولادة — لا حاجة لخطة سفر حالياً.</p>
         )}
         <section className="card">
+          {(plan?.travel_steps ?? []).map((step: { title: string; done: boolean }, i: number) => (
+            <div className="detail-row" key={i}>
+              <span>
+                {step.done ? '✓ ' : ''}
+                {step.title}
+              </span>
+              {edit && (
+                <ActionForm action={productAction} label={step.done ? 'إعادة فتح' : 'تم'}>
+                  <input type="hidden" name="action" value="travel-step" />
+                  <input type="hidden" name="index" value={i} />
+                  <input type="hidden" name="done" value={String(!step.done)} />
+                </ActionForm>
+              )}
+            </div>
+          ))}
           <ActionForm action={productAction} label="حفظ خطة السفر" disabled={!edit}>
             <input type="hidden" name="action" value="travel" />
             <div className="form-grid">

@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { ConnectionNotice } from './connection-notice';
 import Image from 'next/image';
 import type { ReactNode } from 'react';
 export function Brand() {
@@ -100,7 +101,10 @@ export function Shell({
           </Link>
         </header>
         {demo && <aside className="demo-banner">بيانات تجريبية</aside>}
-        <main className={'app-main page-' + active}>{children}</main>
+        <main className={'app-main page-' + active}>
+          <ConnectionNotice />
+          {children}
+        </main>
         <nav className="bottom-nav" aria-label="التنقل الرئيسي">
           {[
             ['today', 'اليوم'],

@@ -1,8 +1,10 @@
 import Link from 'next/link';
+import { NameForm } from './name-form';
 import { notFound, redirect } from 'next/navigation';
 import { productContext, records } from '@/lib/product-server';
 import {
   appointmentKinds,
+  monthDate,
   dateLabel,
   daysBetween,
   shiftDate,
@@ -110,7 +112,7 @@ export async function JourneyPages({
             ...[30, 40, 60, 90].map((d, i) => ({
               id: 'after-' + d,
               title: ['الشهر الأول', 'الأربعين', 'الشهر الثاني', 'الشهر الثالث'][i],
-              event_date: shiftDate(p.birth_date, d),
+              event_date: d === 40 ? shiftDate(p.birth_date, 40) : monthDate(p.birth_date, d / 30),
               href: '/journey/postpartum',
             })),
           ]
@@ -470,16 +472,11 @@ export async function JourneyPages({
           description="يظهر الاسم بلطف حيث يضيف قرباً، دون تكراره في كل عنوان."
           back="/journey"
         >
-          <ActionForm action={productAction} label="حفظ" disabled={!edit}>
-            <input type="hidden" name="action" value="baby-name" />
-            <Field
-              name="baby_name"
-              label="الاسم · اختياري"
-              value={p.baby_name ?? ''}
-              maxLength={60}
-            />
-            <small>اتركوه فارغاً لنبقيه «صغيركم» حالياً.</small>
-          </ActionForm>
+          <NameForm
+            initial={p.baby_name ?? ''}
+            week={gestation(p.due_date)?.weeks ?? 0}
+            editable={edit}
+          />
         </ProductPage>
       );
     if (section === 'gender')
@@ -591,7 +588,13 @@ export async function JourneyPages({
           {['الشهر الأول', 'الشهر الثاني', 'الشهر الثالث'].map((v, i) => (
             <section className="card" key={v}>
               <h3>{v}</h3>
-              <p>{age >= (i + 1) * 30 ? 'تم' : age >= i * 30 ? 'الآن' : 'لاحقاً'}</p>
+              <p>
+                {isoToday() >= monthDate(p.birth_date, i + 1)
+                  ? 'تم'
+                  : isoToday() >= monthDate(p.birth_date, i)
+                    ? 'الآن'
+                    : 'لاحقاً'}
+              </p>
             </section>
           ))}
         </div>

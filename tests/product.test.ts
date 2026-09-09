@@ -57,3 +57,21 @@ test('care windows preserve manual decisions and do not infer a test from generi
     true,
   );
 });
+
+test('monthly target rounds up in displayed currency units', () => {
+  assert.equal(
+    goalNumbers(
+      { expected_cents: 100001, actual_cents: null, initial_cents: 0, funding_date: '2026-12-01' },
+      0,
+      '2026-10-01',
+    ).monthly,
+    33400,
+  );
+});
+
+import { monthDate, babyAge } from '../src/lib/product.ts';
+test('baby months use calendar anniversaries, including month-end births', () => {
+  assert.equal(monthDate('2026-01-31', 1), '2026-02-28');
+  assert.equal(monthDate('2026-01-31', 2), '2026-03-31');
+  assert.equal(babyAge('2026-01-31', 'female', '2026-03-31'), 'عمرها 2 أشهر و0 أيام');
+});

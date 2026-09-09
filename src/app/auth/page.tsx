@@ -2,7 +2,7 @@ export const dynamic = 'force-dynamic';
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
 import { Brand, PageTitle, Icon, NurseryImage } from '@/components/ui';
-import { ActionForm } from '@/components/form';
+import { LoginForm } from '@/components/login-form';
 import { configured, googleEnabled, user } from '@/lib/supabase';
 import { safeNext } from '@/lib/validation';
 import { emailLogin, googleLogin } from '@/app/actions';
@@ -32,8 +32,8 @@ export default async function Auth({
         <Brand />
         <PageTitle
           eyebrow="حكاية جديدة تبدأ هنا"
-          title="أهلًا بك في رحلتكم"
-          description="ادخل بحسابك، ثم أنشئ عائلتك أو انضم بدعوة الشريك."
+          title="ادخلوا إلى رحلتكم"
+          description="بحساب Google بضغطة واحدة، أو برابط إلى بريدكم."
         />
         {!ready && (
           <p className="notice" role="status">
@@ -45,31 +45,7 @@ export default async function Auth({
             تعذر إكمال الدخول. جرّب رابطًا جديدًا أو طريقة أخرى.
           </p>
         )}
-        {googleEnabled() && (
-          <form action={googleLogin}>
-            <input type="hidden" name="next" value={next} />
-            <button className="button secondary full" disabled={!ready}>
-              المتابعة بحساب Google
-            </button>
-          </form>
-        )}
-        <div className="card">
-          <ActionForm action={emailLogin} label="أرسل رابط الدخول" disabled={!ready}>
-            <input type="hidden" name="next" value={next} />
-            <label>
-              البريد الإلكتروني
-              <input
-                name="email"
-                type="email"
-                autoComplete="email"
-                dir="ltr"
-                required
-                maxLength={254}
-              />
-            </label>
-          </ActionForm>
-        </div>
-        <small>سنرسل رابطًا للدخول إلى بريدك. لا تحتاج إلى تذكر كلمة مرور.</small>
+        <LoginForm next={next} ready={ready} google={googleEnabled()} />
         <div className="privacy-line">
           <Icon name="lock" />
           <span>حسابك لك. مشاركة تفاصيلك تبقى باختيارك.</span>

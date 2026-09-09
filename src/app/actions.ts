@@ -242,3 +242,14 @@ export async function shareRecord(_: FormState, form: FormData): Promise<FormSta
   revalidatePath('/private');
   return { success: p.data.mode === 'share' ? 'مُنحت صلاحية المشاهدة.' : 'أُلغيت المشاركة.' };
 }
+
+export async function verifyEmailCode(_: FormState, form: FormData): Promise<FormState> {
+  const parsed = z
+    .object({ email: z.string().trim().email().max(254), token: z.string().regex(/^\d{6,8}$/) })
+    .safeParse(Object.fromEntries(form));
+  if (!parsed.success) return { error: 'الرمز غير صحيح أو انتهت صلاحيته.' };
+  const client = await db();
+  const { error } = await client.auth.verifyOtp({ ...parsed.data, type: 'email' });
+  if (error) return { error: 'الرمز غير صحيح أو انتهت صلاحيته.' };
+  redirect(safeNext(form.get('next')));
+}

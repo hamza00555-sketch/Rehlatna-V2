@@ -36,6 +36,12 @@ await db.exec(
     'utf8',
   ),
 );
+await db.exec(
+  await readFile(
+    new URL('../supabase/migrations/202609090004_relations.sql', import.meta.url),
+    'utf8',
+  ),
+);
 const alice = '00000000-0000-4000-8000-000000000001',
   bob = '00000000-0000-4000-8000-000000000002',
   viewer = '00000000-0000-4000-8000-000000000003',
