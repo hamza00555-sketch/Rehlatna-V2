@@ -1,4 +1,5 @@
 import 'server-only';
+import { permissions, memberRoles, type Permission } from './product';
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import { cache } from 'react';
@@ -58,7 +59,9 @@ export const context = cache(async () => {
   const client = await db();
   const { data, error } = await client
     .from('memberships')
-    .select('household_id,display_name,role,households(name)')
+    .select(
+      'household_id,display_name,role,roles,permission_overrides,households(name,follow_city,birth_city,currency,partner_name)',
+    )
     .eq('user_id', current.id)
     .eq('active', true)
     .order('created_at');
@@ -66,7 +69,13 @@ export const context = cache(async () => {
   if (!data?.length) redirect('/setup');
   const selected = (await cookies()).get('rehlatna-family')?.value;
   const membership = data.find((x) => x.household_id === selected) ?? data[0];
+  const allowed = permissions(membership);
   return {
+    can: (permission: Permission) => allowed.has(permission),
+    roles: memberRoles(membership),
+    household: Array.isArray(membership.households)
+      ? membership.households[0]
+      : membership.households,
     client,
     current,
     membership,

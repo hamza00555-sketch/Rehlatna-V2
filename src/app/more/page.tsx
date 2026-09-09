@@ -1,2 +1,5 @@
 export const dynamic = 'force-dynamic';
-export { default } from '../family/page';
+import { MorePages } from '@/components/more-pages';
+export default function Page() {
+  return <MorePages />;
+}

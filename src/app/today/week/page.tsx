@@ -2,9 +2,12 @@ export const dynamic = 'force-dynamic';
 import { redirect, notFound } from 'next/navigation';
 import { context } from '@/lib/supabase';
 import { gestation } from '@/lib/validation';
+import { CareWindows } from '@/components/care-windows';
+import { PrivatePage } from '@/components/product-ui';
 import { WeekPage } from '@/components/week-page';
 export default async function Page({ searchParams }: { searchParams: Promise<{ week?: string }> }) {
   const ctx = await context();
+  if (!ctx.can('journey.view')) return <PrivatePage />;
   const { data, error } = await ctx.client
     .from('pregnancies')
     .select('due_date')
@@ -19,5 +22,11 @@ export default async function Page({ searchParams }: { searchParams: Promise<{ w
   const current = Math.min(40, stage.weeks),
     week = query.week === undefined ? current : Number(query.week);
   if (!Number.isInteger(week) || week < 0 || week > 40) notFound();
-  return <WeekPage current={current} week={week} />;
+  return (
+    <WeekPage
+      current={current}
+      week={week}
+      care={week === current ? <CareWindows week={week} /> : undefined}
+    />
+  );
 }

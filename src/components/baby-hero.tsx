@@ -56,7 +56,12 @@ export function BabyHero({
       try {
         manual = localStorage.getItem('rehlatna-reduce-motion') === 'true';
       } catch {}
-      setMotionBlocked(query.matches || Boolean(connection?.saveData) || manual);
+      setMotionBlocked(
+        query.matches ||
+          Boolean(connection?.saveData) ||
+          manual ||
+          document.documentElement.classList.contains('reduce-motion'),
+      );
     };
     update();
     setGreeting(new Date().getHours() < 12 ? 'صباح الخير' : 'مساء الخير');

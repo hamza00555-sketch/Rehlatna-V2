@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import type { ReactNode } from 'react';
 import Image from 'next/image';
 import { Shell, PageTitle } from '@/components/ui';
 import { DangerSigns } from '@/components/sheet';
@@ -7,10 +8,12 @@ export function WeekPage({
   week,
   current,
   demo = false,
+  care,
 }: {
   week: number;
   current: number;
   demo?: boolean;
+  care?: ReactNode;
 }) {
   const media = weeklyMedia(week, demo),
     base = demo ? '/demo/week' : '/today/week',
@@ -93,6 +96,7 @@ export function WeekPage({
           </section>
         </div>
       )}
+      {care}
       <DangerSigns />
       {week === current && (
         <div className="bento">
