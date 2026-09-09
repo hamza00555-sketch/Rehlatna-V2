@@ -38,7 +38,10 @@ export default async function Family() {
       )}
       <div className="list">
         {data.map((m) => (
-          <article className="card" key={m.user_id}>
+          <article className="card member-card" key={m.user_id}>
+            <span className="member-avatar" aria-hidden="true">
+              {Array.from(String(m.display_name))[0]}
+            </span>
             <div className="row">
               <h2>{m.display_name}</h2>
               <span className="badge">{names[m.role]}</span>

@@ -17,3 +17,17 @@ Current V2 project and deployment details are recorded in `implementation-status
 Create independent production environment variables and a production database. Take a backup and prove restoration on a disposable project before transferring any real data. Use versioned SQL migrations and a dry-run data conversion script before any legacy migration. Vercel code rollback does **not** roll back a database migration.
 
 Test private export/deletion, owner handover, audit events and attachment lifecycle before real families onboard. Limit Vercel production deployments to reviewed code and required CI checks. No production database has been changed by this repository's local tests.
+
+## Connector deployment fallback
+
+When project environment settings cannot be supplied through the connector, run `node scripts/prepare-deployment.mjs` after staging the intended source and public assets. It reads `.env.local`, validates the four public settings and writes the ignored `.vercel/configured-deploy.json` file to submit as `files` to the deployment connector. It injects a deployment-only `env` block into Next config. These values are deliberately public; never add a client secret, SMTP password, database password or service-role key to that block. Binary public assets are encoded as base64. The tracked source config stays environment-independent.
+
+## Public account ownership
+
+Every end user gets an independent Supabase Auth identity and signs in to the Rehlatna app, not the Supabase dashboard. Emails from the current `emailLogin` action go to its validated input address; there is no admin recipient or signup notification in that action. A test using the owner's email is not a forwarding rule.
+
+Google setup needs a Google Auth Platform web client with authorised origin `https://rehlatna-v2.vercel.app` and redirect URI `https://zhknyqqjlrdiscmmbfqb.supabase.co/auth/v1/callback`. Configure branding, audience and required verified app details; keep client secrets only in the Supabase provider settings. Set `GOOGLE_AUTH_ENABLED=true` after a successful round-trip test.
+
+For email, Supabase's built-in SMTP is restricted to project team addresses and is not the public product mailer. Configure a custom SMTP service and a verified sender domain, then use the product's name, Arabic templates and the user's recipient address. Do not disable confirmation as a shortcut. Templates and sender branding are separate settings; changing a template alone does not change the sender.
+
+Official setup references: [Google provider](https://supabase.com/docs/guides/auth/social-login/auth-google), [custom SMTP](https://supabase.com/docs/guides/auth/auth-smtp), [Next config public env behaviour](https://nextjs.org/docs/app/api-reference/config/next-config-js/env).
